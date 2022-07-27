@@ -1,12 +1,16 @@
 package abc;
 import util.Const;
 import util.Time;
-
 import javax.swing.JFrame;
+
+enum SceneState {
+	MENU, PLAY
+}
 
 public class Window extends JFrame implements Runnable {
 	private static Window window = null;
 	private boolean isRunning = false;
+	private static Scene currentScene = null;
 	
 	private Window() {
 		this.setSize(Const.SCREEN_WIDTH, Const.SCREEN_HEIGHT);
@@ -14,6 +18,11 @@ public class Window extends JFrame implements Runnable {
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// add mouse and key listener
+		this.addMouseListener(MouseListener.get());
+		this.addMouseMotionListener(MouseListener.get());
+		this.addKeyListener(KeyListener.get());
+		
 		this.setVisible(true);
 		this.isRunning = true;
 	}
@@ -25,24 +34,45 @@ public class Window extends JFrame implements Runnable {
 		return Window.window;
 	}
 	
-	public void init() {
+	public static void changeScene(SceneState newScene) {
+		switch (newScene) {
+			case MENU:
+				currentScene = new MenuScene();
+				break;
+			case PLAY:
+				currentScene = new PlayScene();
+				break;
+			default:
+				System.out.println("Not a valid scene" + newScene);
+				System.exit(-1);
+				break;
+		}
+		currentScene.init();
+	}
 	
+	public void init() {
+		changeScene(SceneState.PLAY);
 	}
 	
 	public void update(double delta_time) {
-	
+		//System.out.println(1/delta_time + "fps");
+		currentScene.update(delta_time);
 	}
 	
 	@Override
 	public void run() {
 		double lastFrameTime = 0.0;
+		double time = 0.0;
+		double delta_time = 0.0;
 		try {
 			while (isRunning) {
-				double time = Time.getTime();
-				double delta_time = time - lastFrameTime;
+				time = Time.getTime();
+				delta_time = time - lastFrameTime;
 				lastFrameTime = time;
+				
 				update(delta_time);
 				
+				Thread.sleep(16);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
