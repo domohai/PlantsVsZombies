@@ -5,13 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0e6d5ce-4426-4fec-acf9-cda95d658b86" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/abc/KeyListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/abc/MenuScene.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/abc/MouseListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/abc/PlayScene.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/abc/Scene.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/abc/Component.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/abc/GameObject.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/abc/Transform.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/util/Vector2D.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/abc/PlayScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/abc/PlayScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/abc/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/abc/Scene.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/abc/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/abc/Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/util/Const.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/Const.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,13 +51,14 @@
     <option name="showMembers" value="true" />
     <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
@@ -91,5 +94,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

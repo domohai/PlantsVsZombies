@@ -2,6 +2,9 @@ package abc;
 import util.Const;
 import util.Time;
 import javax.swing.JFrame;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 
 enum SceneState {
 	MENU, PLAY
@@ -11,6 +14,8 @@ public class Window extends JFrame implements Runnable {
 	private static Window window = null;
 	private boolean isRunning = false;
 	private static Scene currentScene = null;
+	private Image doubleBufferImage = null;
+	private Graphics doubleBufferGraphics = null;
 	
 	private Window() {
 		this.setSize(Const.SCREEN_WIDTH, Const.SCREEN_HEIGHT);
@@ -48,15 +53,31 @@ public class Window extends JFrame implements Runnable {
 				break;
 		}
 		currentScene.init();
+		currentScene.start();
 	}
 	
 	public void init() {
 		changeScene(SceneState.PLAY);
+		doubleBufferImage = createImage(getWidth(), getHeight());
+		doubleBufferGraphics = doubleBufferImage.getGraphics();
 	}
 	
 	public void update(double delta_time) {
 		//System.out.println(1/delta_time + "fps");
+		System.out.println(this.getInsets().top);
+		System.out.println(this.getInsets().bottom);
 		currentScene.update(delta_time);
+		this.draw(getGraphics());
+	}
+	
+	public void draw(Graphics g) {
+		renderOffScreen(doubleBufferGraphics);
+		g.drawImage(doubleBufferImage, 0,30, getWidth(), 600, null);
+	}
+	
+	public void renderOffScreen(Graphics g) {
+		Graphics2D g2D = (Graphics2D) g;
+		currentScene.draw(g2D);
 	}
 	
 	@Override
