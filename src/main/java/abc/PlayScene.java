@@ -1,9 +1,12 @@
 package abc;
 import components.Sprite;
+import components.Spritesheet;
 import util.AssetPool;
 import util.Const;
+import util.Vector2D;
+
 import java.awt.Graphics2D;
-import java.awt.Color;
+
 
 public class PlayScene extends Scene{
 	GameObject test;
@@ -14,9 +17,9 @@ public class PlayScene extends Scene{
 	
 	@Override
 	public void init() {
-		test = new GameObject("new GameObject", new Transform());
-		Sprite sprite = AssetPool.getSprite("assets/bg1.jpg");
-		test.addComponent(sprite);
+		test = new GameObject("new GameObject", new Transform(new Vector2D(100.0f, 100.0f)));
+		Spritesheet spritesheet = new Spritesheet("assets/zombies/zombie_move.png", 85, 142, 14, 14);
+		test.addComponent(spritesheet.sprites.get(0));
 		this.addGameObject(test);
 	}
 	

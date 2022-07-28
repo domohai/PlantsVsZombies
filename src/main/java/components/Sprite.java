@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class Sprite extends Component {
-	
 	public int width, height;
 	public BufferedImage image;
 
@@ -25,6 +24,12 @@ public class Sprite extends Component {
 		}
 		this.width = this.image.getWidth();
 		this.height = this.image.getHeight();
+	}
+	
+	public Sprite(BufferedImage image) {
+		this.image = image;
+		this.width = image.getWidth();
+		this.height = image.getHeight();
 	}
 	
 	@Override

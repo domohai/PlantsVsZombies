@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0e6d5ce-4426-4fec-acf9-cda95d658b86" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/components/Bounds.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/components/Sprite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/util/AssetPool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/components/Spritesheet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/abc/Component.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/abc/Component.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/abc/GameObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/abc/GameObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/abc/PlayScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/abc/PlayScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/abc/Transform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/abc/Transform.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/abc/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/abc/Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/components/Sprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/components/Sprite.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
