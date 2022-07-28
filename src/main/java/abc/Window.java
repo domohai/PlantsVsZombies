@@ -12,7 +12,7 @@ enum SceneState {
 
 public class Window extends JFrame implements Runnable {
 	private static Window window = null;
-	private boolean isRunning = false;
+	private boolean isRunning;
 	private static Scene currentScene = null;
 	private Image doubleBufferImage = null;
 	private Graphics doubleBufferGraphics = null;
@@ -64,15 +64,13 @@ public class Window extends JFrame implements Runnable {
 	
 	public void update(double delta_time) {
 		//System.out.println(1/delta_time + "fps");
-		System.out.println(this.getInsets().top);
-		System.out.println(this.getInsets().bottom);
 		currentScene.update(delta_time);
 		this.draw(getGraphics());
 	}
 	
 	public void draw(Graphics g) {
 		renderOffScreen(doubleBufferGraphics);
-		g.drawImage(doubleBufferImage, 0,30, getWidth(), 600, null);
+		g.drawImage(doubleBufferImage, 0,30, getWidth(), getHeight(), null);
 	}
 	
 	public void renderOffScreen(Graphics g) {

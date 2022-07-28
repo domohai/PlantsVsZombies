@@ -1,9 +1,12 @@
 package abc;
+import components.Sprite;
+import util.AssetPool;
 import util.Const;
 import java.awt.Graphics2D;
 import java.awt.Color;
 
 public class PlayScene extends Scene{
+	GameObject test;
 	
 	public PlayScene() {
 	
@@ -11,7 +14,10 @@ public class PlayScene extends Scene{
 	
 	@Override
 	public void init() {
-	
+		test = new GameObject("new GameObject", new Transform());
+		Sprite sprite = AssetPool.getSprite("assets/bg1.jpg");
+		test.addComponent(sprite);
+		this.addGameObject(test);
 	}
 	
 	@Override
@@ -23,7 +29,11 @@ public class PlayScene extends Scene{
 	
 	@Override
 	public void draw(Graphics2D g2D) {
-		g2D.setColor(Color.BLACK);
-		g2D.fillRect(0,0, Const.SCREEN_WIDTH, Const.SCREEN_HEIGHT);
+		test.draw(g2D);
+		/*
+		for (GameObject g : this.gameObjects) {
+			g.draw(g2D);
+		}
+		*/
 	}
 }

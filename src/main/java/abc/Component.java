@@ -1,7 +1,7 @@
 package abc;
 import java.awt.Graphics2D;
 
-public abstract class Component {
+public abstract class Component<T> {
 	public GameObject gameObject = null;
 	
 	public void start() {}

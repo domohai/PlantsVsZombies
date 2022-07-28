@@ -1,11 +1,12 @@
 package abc;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameObject {
 	private String name;
-	private List<Component> components = null;
-	public Transform transform = null;
+	private List<Component> components;
+	public Transform transform;
 	
 	public GameObject(String name) {
 		this.name = name;
@@ -31,6 +32,12 @@ public class GameObject {
 		}
 	}
 	
+	public void draw(Graphics2D g2D) {
+		for (Component c : this.components) {
+			c.draw(g2D);
+		}
+	}
+	
 	public void addComponent(Component newComponent) {
 		this.components.add(newComponent);
 		newComponent.gameObject = this;
@@ -44,6 +51,7 @@ public class GameObject {
 				} catch (ClassCastException e) {
 					e.printStackTrace();
 					assert false : "Error: Casting component!";
+					System.exit(-1);
 				}
 			}
 		}
