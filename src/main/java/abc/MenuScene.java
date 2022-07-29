@@ -3,8 +3,8 @@ import java.awt.Graphics2D;
 
 public class MenuScene extends Scene{
 	
-	public MenuScene() {
-	
+	public MenuScene(String name) {
+		super(name);
 	}
 	
 	@Override

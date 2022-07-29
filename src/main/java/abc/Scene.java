@@ -4,10 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Scene {
+	private String name;
 	private boolean isRunning = false;
-	protected List<GameObject> gameObjects = new ArrayList<>();
+	protected List<GameObject> gameObjects;
+	protected Renderer renderer = null;
 	
-	public Scene() {}
+	public Scene(String name) {
+		this.name = name;
+		this.gameObjects = new ArrayList<>();
+		this.renderer = new Renderer();
+	}
+	
 	public void init() {}
 	
 	public void start() {
@@ -19,6 +26,7 @@ public abstract class Scene {
 	
 	public void addGameObject(GameObject newGameObject) {
 		gameObjects.add(newGameObject);
+		this.renderer.submit(newGameObject);
 		if (isRunning) newGameObject.start();
 	}
 	

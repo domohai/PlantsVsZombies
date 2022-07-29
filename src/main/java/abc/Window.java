@@ -42,10 +42,10 @@ public class Window extends JFrame implements Runnable {
 	public static void changeScene(SceneState newScene) {
 		switch (newScene) {
 			case MENU:
-				currentScene = new MenuScene();
+				currentScene = new MenuScene("MenuScene");
 				break;
 			case PLAY:
-				currentScene = new PlayScene();
+				currentScene = new PlayScene("PlayScene");
 				break;
 			default:
 				System.out.println("Not a valid scene" + newScene);
@@ -81,8 +81,8 @@ public class Window extends JFrame implements Runnable {
 	@Override
 	public void run() {
 		double lastFrameTime = 0.0;
-		double time = 0.0;
-		double delta_time = 0.0;
+		double time;
+		double delta_time;
 		try {
 			while (isRunning) {
 				time = Time.getTime();
@@ -91,7 +91,7 @@ public class Window extends JFrame implements Runnable {
 				
 				update(delta_time);
 				
-				Thread.sleep(16);
+				Thread.sleep(15);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

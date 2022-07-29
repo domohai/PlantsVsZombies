@@ -21,4 +21,8 @@ public class Transform {
 		this.position = position;
 		this.scale = scale;
 	}
+	
+	public Transform copy() {
+		return new Transform(this.position.copy(), this.scale.copy());
+	}
 }

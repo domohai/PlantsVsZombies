@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Spritesheet {
-	public List<Sprite> sprites;
+	private List<Sprite> sprites;
 	public int tileW, tileH;
 	
 	public Spritesheet(String file_path, int tileW, int tileH, int columns, int size) {
@@ -22,6 +22,11 @@ public class Spritesheet {
 				if (count > size - 1) break;
 			}
 		}
+		AssetPool.addSpritesheet(file_path, this);
+	}
+	
+	public Sprite getSprite(int index) {
+		return this.sprites.get(index);
 	}
 	
 }
