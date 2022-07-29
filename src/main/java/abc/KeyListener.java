@@ -7,7 +7,7 @@ public class KeyListener extends KeyAdapter implements java.awt.event.KeyListene
 	private boolean[] keyPressed;
 	
 	private KeyListener() {
-		keyPressed = new boolean[128];
+		keyPressed = new boolean[350];
 	}
 	
 	public static KeyListener get() {

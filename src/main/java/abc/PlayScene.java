@@ -1,4 +1,5 @@
 package abc;
+import components.Bounds;
 import components.Ground;
 import components.Movement;
 import components.Spritesheet;
@@ -6,28 +7,57 @@ import util.AssetPool;
 import util.Const;
 import util.Vector2D;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class PlayScene extends Scene{
+public class PlayScene extends Scene {
+	public Map<Integer, List<GameObject>> plants;
+	public Map<Integer, List<GameObject>> zombies;
 	GameObject test;
 	
 	public PlayScene(String name) {
 		super(name);
+		this.plants = new HashMap<>();
+		this.zombies = new HashMap<>();
+		for (Integer i = 1; i < 6; i++) {
+			this.plants.put(i, new ArrayList<>());
+			this.zombies.put(i, new ArrayList<>());
+		}
+	}
+	
+	@Override
+	public void start() {
+		for (Integer i = 1; i < 6; i++) {
+			for (GameObject g : this.plants.get(i)) {
+				g.start();
+			}
+			for (GameObject g : this.zombies.get(i)) {
+				g.start();
+			}
+		}
+		for (GameObject g : this.gameObjects) {
+			g.start();
+		}
+		isRunning = true;
 	}
 	
 	@Override
 	public void init() {
 		load_Resources();
 		// add ground
-		GameObject ground = new GameObject("Background", new Transform(new Vector2D(-200.0f, 0.0f)));
+		GameObject ground = new GameObject("Background", new Transform(new Vector2D(-200.0f, 0.0f)), -5);
 		ground.addComponent(new Ground(AssetPool.getSpritesheet("assets/bg1.jpg")));
-		// the ground will not change position or something so just need to draw it
+		// the ground will not change position or something so just draw it
 		renderer.submit(ground);
 		
-		test = new GameObject("new GameObject", new Transform(new Vector2D(600.0f, 100.0f)));
+		test = new GameObject("new GameObject", new Transform(new Vector2D(600.0f, 100.0f)), 5);
 		Spritesheet spritesheet = AssetPool.getSpritesheet("assets/zombies/zombie_move.png");
 		test.addComponent(spritesheet.getSprite(0));
 		test.addComponent(new Movement(new Vector2D(Const.ZOMBIE_SPEED, 0.0f)));
-		this.addGameObject(test);
+		test.addComponent(new Bounds(Const.ZOMBIE_WIDTH, Const.ZOMBIE_HEIGHT));
+		this.addZombie(test, 1);
 	}
 	
 	public void load_Resources() {
@@ -38,6 +68,14 @@ public class PlayScene extends Scene{
 	
 	@Override
 	public void update(double dt) {
+		for (Integer i = 1; i < 6; i++) {
+			for (GameObject g : this.plants.get(i)) {
+				g.update(dt);
+			}
+			for (GameObject g : this.zombies.get(i)) {
+				g.update(dt);
+			}
+		}
 		for (GameObject g : this.gameObjects) {
 			g.update(dt);
 		}
@@ -46,5 +84,65 @@ public class PlayScene extends Scene{
 	@Override
 	public void draw(Graphics2D g2D) {
 		renderer.render(g2D);
+	}
+	
+	public void addZombie(GameObject zombie, Integer line) {
+		Bounds bounds = zombie.getComponent(Bounds.class);
+		if (bounds == null) {
+			System.out.println("Forgot to add Bounds to zombie!");
+		}
+		switch (line) {
+			case 1:
+				zombie.transform.position.y = Const.LINE_1 - bounds.height + 10;
+				break;
+			case 2:
+				zombie.transform.position.y = Const.LINE_2 - bounds.height + 10;
+				break;
+			case 3:
+				zombie.transform.position.y = Const.LINE_3 - bounds.height + 10;
+				break;
+			case 4:
+				zombie.transform.position.y = Const.LINE_4 - bounds.height + 10;
+				break;
+			case 5:
+				zombie.transform.position.y = Const.LINE_5 - bounds.height + 10;
+				break;
+			default:
+				System.out.println("Not a valid line: " + line);
+				break;
+		}
+		this.zombies.get(line).add(zombie);
+		if (isRunning) zombie.start();
+		renderer.submit(zombie);
+	}
+	
+	public void addPlant(GameObject plant, Integer line) {
+		Bounds bounds = plant.getComponent(Bounds.class);
+		if (bounds == null) {
+			System.out.println("Forgot to add Bounds to plant!");
+		}
+		switch (line) {
+			case 1:
+				plant.transform.position.y = Const.LINE_1 - bounds.height;
+				break;
+			case 2:
+				plant.transform.position.y = Const.LINE_2 - bounds.height;
+				break;
+			case 3:
+				plant.transform.position.y = Const.LINE_3 - bounds.height;
+				break;
+			case 4:
+				plant.transform.position.y = Const.LINE_4 - bounds.height;
+				break;
+			case 5:
+				plant.transform.position.y = Const.LINE_5 - bounds.height;
+				break;
+			default:
+				System.out.println("Not a valid line: " + line);
+				break;
+		}
+		this.plants.get(line).add(plant);
+		if (isRunning) plant.start();
+		renderer.submit(plant);
 	}
 }

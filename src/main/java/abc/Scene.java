@@ -5,9 +5,9 @@ import java.util.List;
 
 public abstract class Scene {
 	private String name;
-	private boolean isRunning = false;
+	protected boolean isRunning = false;
 	protected List<GameObject> gameObjects;
-	protected Renderer renderer = null;
+	protected Renderer renderer;
 	
 	public Scene(String name) {
 		this.name = name;

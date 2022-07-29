@@ -49,7 +49,6 @@ public class Window extends JFrame implements Runnable {
 				break;
 			default:
 				System.out.println("Not a valid scene" + newScene);
-				System.exit(-1);
 				break;
 		}
 		currentScene.init();
@@ -95,6 +94,7 @@ public class Window extends JFrame implements Runnable {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("Something wrong with Thread.sleep!");
 		}
 	}
 }

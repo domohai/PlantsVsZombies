@@ -22,7 +22,6 @@ public class AssetPool {
 		File file = new File(file_path);
 		if (!AssetPool.spritesheets.containsKey(file.getAbsolutePath())) {
 			System.out.println("Spritesheet has not been added yet!");
-			System.exit(-1);
 		}
 		return AssetPool.spritesheets.get(file.getAbsolutePath());
 	}

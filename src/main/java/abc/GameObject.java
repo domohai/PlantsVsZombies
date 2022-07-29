@@ -7,15 +7,18 @@ public class GameObject {
 	private String name;
 	private List<Component> components;
 	public Transform transform;
+	public int zIndex;
 	
-	public GameObject(String name) {
+	public GameObject(String name, int zIndex) {
 		this.name = name;
+		this.zIndex = zIndex;
 		this.components = new ArrayList<>();
 		this.transform = new Transform();
 	}
 	
-	public GameObject(String name, Transform transform) {
+	public GameObject(String name, Transform transform, int zIndex) {
 		this.name = name;
+		this.zIndex = zIndex;
 		this.components = new ArrayList<>();
 		this.transform = transform;
 	}
@@ -50,8 +53,7 @@ public class GameObject {
 					return componentClass.cast(c);
 				} catch (ClassCastException e) {
 					e.printStackTrace();
-					assert false : "Error: Casting component!";
-					System.exit(-1);
+					System.out.println("Error: Casting component!");
 				}
 			}
 		}

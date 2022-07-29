@@ -19,8 +19,7 @@ public class Sprite extends Component {
 			this.image = ImageIO.read(file);
 		} catch (Exception e) {
 			e.printStackTrace();
-			//System.out.println("Cannot load image!");
-			System.exit(-1);
+			System.out.println("Cannot load image!");
 		}
 		this.width = this.image.getWidth();
 		this.height = this.image.getHeight();
