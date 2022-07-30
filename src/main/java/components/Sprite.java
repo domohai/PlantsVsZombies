@@ -7,11 +7,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class Sprite extends Component {
-	public int width, height;
-	public BufferedImage image;
-
-	public Sprite(String file_path) {
+	public int width = 0, height = 0;
+	public String file_path = "";
+	public boolean isSubImage = false;
+	public transient BufferedImage image = null;
+	
+	public void loadSprite(String file_path) {
 		File file = new File(file_path);
+		this.file_path = file.getAbsolutePath();
 		try {
 			if (AssetPool.hasSprite(file.getAbsolutePath())) {
 				throw new Exception("Sprite already exist!");
@@ -25,8 +28,9 @@ public class Sprite extends Component {
 		this.height = this.image.getHeight();
 	}
 	
-	public Sprite(BufferedImage image) {
+	public void createSpriteFromImage(BufferedImage image) {
 		this.image = image;
+		this.isSubImage = true;
 		this.width = image.getWidth();
 		this.height = image.getHeight();
 	}

@@ -12,7 +12,8 @@ public class AssetPool {
 	public static Sprite getSprite(String file_path) {
 		File file = new File(file_path);
 		if (!AssetPool.sprites.containsKey(file.getAbsolutePath())) {
-			Sprite sprite = new Sprite(file.getAbsolutePath());
+			Sprite sprite = new Sprite();
+			sprite.loadSprite(file.getAbsolutePath());
 			AssetPool.sprites.put(file.getAbsolutePath(), sprite);
 		}
 		return AssetPool.sprites.get(file.getAbsolutePath());

@@ -7,7 +7,7 @@ public class GameObject {
 	private String name;
 	private List<Component> components;
 	public Transform transform;
-	public int zIndex;
+	private int zIndex;
 	
 	public GameObject(String name, int zIndex) {
 		this.name = name;
@@ -68,6 +68,14 @@ public class GameObject {
 				return;
 			}
 		}
+	}
+	
+	public GameObject copy() {
+		return null;
+	}
+	
+	public int getzIndex() {
+		return this.zIndex;
 	}
 	
 }

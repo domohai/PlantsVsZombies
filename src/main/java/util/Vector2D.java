@@ -1,20 +1,17 @@
 package util;
 
 public class Vector2D {
-	public float x, y;
+	public float x = 0.0f, y = 0.0f;
 	
-	public Vector2D() {
-		this.x = 0.0f;
-		this.y = 0.0f;
-	}
-	
-	public Vector2D(float x, float y) {
+	public void setValue(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}
 	
 	public Vector2D copy() {
-		return new Vector2D(this.x, this.y);
+		Vector2D vector2D = new Vector2D();
+		vector2D.setValue(this.x, this.y);
+		return vector2D;
 	}
 	
 }
