@@ -1,0 +1,45 @@
+[
+  {
+    "name": "new GameObject",
+    "components": [
+      {
+        "type": "components.Sprite",
+        "properties": {
+          "width": 85,
+          "height": 142,
+          "file_path": "",
+          "isSubImage": true
+        }
+      },
+      {
+        "type": "components.Movement",
+        "properties": {
+          "velocity": {
+            "x": 20.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "components.Bounds",
+        "properties": {
+          "width": 85.0,
+          "height": 142.0
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 569.3776,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "zIndex": 5,
+    "line": 1,
+    "objectType": "ZOMBIE"
+  }
+]

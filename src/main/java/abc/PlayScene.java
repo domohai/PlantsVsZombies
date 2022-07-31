@@ -6,40 +6,16 @@ import util.AssetPool;
 import util.Const;
 import util.Vector2D;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class PlayScene extends Scene {
-	public Map<Integer, List<GameObject>> plants;
-	public Map<Integer, List<GameObject>> zombies;
-	GameObject test;
+	//GameObject test;
 	
 	public PlayScene(String name) {
 		super(name);
-		this.plants = new HashMap<>();
-		this.zombies = new HashMap<>();
-		for (Integer i = 1; i < 6; i++) {
-			this.plants.put(i, new ArrayList<>());
-			this.zombies.put(i, new ArrayList<>());
-		}
-	}
-	
-	@Override
-	public void start() {
-		for (Integer i = 1; i < 6; i++) {
-			for (GameObject g : this.plants.get(i)) {
-				g.start();
-			}
-			for (GameObject g : this.zombies.get(i)) {
-				g.start();
-			}
-		}
-		for (GameObject g : this.gameObjects) {
-			g.start();
-		}
-		isRunning = true;
 	}
 	
 	@Override
@@ -50,7 +26,7 @@ public class PlayScene extends Scene {
 		groundVector.setValue(-200.0f, 0.0f);
 		Transform groundTransform = new Transform();
 		groundTransform.setValue(groundVector);
-		GameObject ground = new GameObject("Background", groundTransform, -5);
+		GameObject ground = new GameObject("Background", groundTransform, -5, Type.OTHER, 0);
 		ground.addComponent(new Ground(AssetPool.getSpritesheet("assets/bg1.jpg")));
 		// the ground will not change position or something so just draw it
 		renderer.submit(ground);
@@ -59,7 +35,7 @@ public class PlayScene extends Scene {
 		vector2D.setValue(600.0f, 100.0f);
 		Transform transform = new Transform();
 		transform.setValue(vector2D);
-		test = new GameObject("new GameObject", transform, 5);
+		test = new GameObject("new GameObject", transform, 5, Type.ZOMBIE , 1);
 		
 		Spritesheet spritesheet = AssetPool.getSpritesheet("assets/zombies/zombie_move.png");
 		test.addComponent(spritesheet.getSprite(0));
@@ -73,10 +49,17 @@ public class PlayScene extends Scene {
 		Bounds bounds = new Bounds();
 		bounds.setValue(Const.ZOMBIE_WIDTH, Const.ZOMBIE_HEIGHT);
 		test.addComponent(bounds);
-		this.addZombie(test, 1);
+		//this.addZombie(test);
+		this.addGameObject(test);
 		
+		/*
+		Gson gson = new GsonBuilder().setPrettyPrinting()
+				.registerTypeAdapter(Component.class, new ComponentDeserializer())
+				.registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
+				.create();
+		System.out.println(gson.toJson(test));
 		
-		
+		 */
 	}
 	
 	public void load_Resources() {
@@ -105,11 +88,58 @@ public class PlayScene extends Scene {
 		renderer.render(g2D);
 	}
 	
-	public void addZombie(GameObject zombie, Integer line) {
+	@Override
+	public void save() {
+		Gson gson = new GsonBuilder().setPrettyPrinting()
+				.registerTypeAdapter(Component.class, new ComponentDeserializer())
+				.registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
+				.create();
+		try {
+			FileWriter writer = new FileWriter("data.txt");
+			writer.write(gson.toJson(this.gameObjects));
+			//writer.write(gson.toJson(this.zombies));
+			//writer.write(gson.toJson(this.plants));
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void load() {
+		Gson gson = new GsonBuilder().setPrettyPrinting()
+				.registerTypeAdapter(Component.class, new ComponentDeserializer())
+				.registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
+				.create();
+		String inFile = "";
+		try {
+			inFile = new String(Files.readAllBytes(Paths.get("data.txt")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (!inFile.equals("")) {
+			GameObject[] Objects1 = gson.fromJson(inFile, GameObject[].class);
+			// TODO: find a way to separate zombies and plants
+			for (int i = 0; i < Objects1.length; i++) {
+				if (Objects1[i].getObjectType() == Type.ZOMBIE) {
+					this.addZombie(Objects1[i]);
+				} else if (Objects1[i].getObjectType() == Type.PLANT) {
+					this.addPlant(Objects1[i]);
+				} else {
+					this.addGameObject(Objects1[i]);
+				}
+			}
+		}
+		this.dataLoaded = true;
+	}
+	
+	@Override
+	public void addZombie(GameObject zombie) {
 		Bounds bounds = zombie.getComponent(Bounds.class);
 		if (bounds == null) {
 			System.out.println("Forgot to add Bounds to zombie!");
 		} else {
+			int line = zombie.getLine();
 			switch (line) {
 				case 1:
 					zombie.transform.position.y = Const.LINE_1 - bounds.height + 10;
@@ -133,37 +163,6 @@ public class PlayScene extends Scene {
 			this.zombies.get(line).add(zombie);
 			if (isRunning) zombie.start();
 			renderer.submit(zombie);
-		}
-	}
-	
-	public void addPlant(GameObject plant, Integer line) {
-		Bounds bounds = plant.getComponent(Bounds.class);
-		if (bounds == null) {
-			System.out.println("Forgot to add Bounds to plant!");
-		} else {
-			switch (line) {
-				case 1:
-					plant.transform.position.y = Const.LINE_1 - bounds.height;
-					break;
-				case 2:
-					plant.transform.position.y = Const.LINE_2 - bounds.height;
-					break;
-				case 3:
-					plant.transform.position.y = Const.LINE_3 - bounds.height;
-					break;
-				case 4:
-					plant.transform.position.y = Const.LINE_4 - bounds.height;
-					break;
-				case 5:
-					plant.transform.position.y = Const.LINE_5 - bounds.height;
-					break;
-				default:
-					System.out.println("Not a valid line: " + line);
-					break;
-			}
-			this.plants.get(line).add(plant);
-			if (isRunning) plant.start();
-			renderer.submit(plant);
 		}
 	}
 }

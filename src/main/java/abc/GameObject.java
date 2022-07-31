@@ -3,22 +3,32 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
+enum Type {
+	ZOMBIE, PLANT, OTHER
+}
+
 public class GameObject {
 	private String name;
 	private List<Component> components;
 	public Transform transform;
 	private int zIndex;
+	private int line;
+	private Type objectType;
 	
 	public GameObject(String name, int zIndex) {
 		this.name = name;
 		this.zIndex = zIndex;
+		this.line = 0;
+		this.objectType = Type.OTHER;
 		this.components = new ArrayList<>();
 		this.transform = new Transform();
 	}
 	
-	public GameObject(String name, Transform transform, int zIndex) {
+	public GameObject(String name, Transform transform, int zIndex, Type type,  int line) {
 		this.name = name;
 		this.zIndex = zIndex;
+		this.objectType = type;
+		this.line = line;
 		this.components = new ArrayList<>();
 		this.transform = transform;
 	}
@@ -76,6 +86,14 @@ public class GameObject {
 	
 	public int getzIndex() {
 		return this.zIndex;
+	}
+	
+	public Type getObjectType() {
+		return this.objectType;
+	}
+	
+	public int getLine() {
+		return this.line;
 	}
 	
 }

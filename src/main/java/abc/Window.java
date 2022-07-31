@@ -82,6 +82,7 @@ public class Window extends JFrame implements Runnable {
 		double lastFrameTime = 0.0;
 		double time;
 		double delta_time;
+		currentScene.load();
 		try {
 			while (isRunning) {
 				time = Time.getTime();
@@ -91,7 +92,9 @@ public class Window extends JFrame implements Runnable {
 				update(delta_time);
 				
 				Thread.sleep(15);
+				currentScene.save();
 			}
+			// currentScene.save();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Something wrong with Thread.sleep!");
