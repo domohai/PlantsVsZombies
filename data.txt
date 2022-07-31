@@ -7,7 +7,8 @@
         "properties": {
           "width": 85,
           "height": 142,
-          "file_path": "",
+          "index": 0,
+          "file_path": "assets/zombies/zombie_move.png",
           "isSubImage": true
         }
       },
@@ -15,7 +16,7 @@
         "type": "components.Movement",
         "properties": {
           "velocity": {
-            "x": 20.0,
+            "x": 50.0,
             "y": 0.0
           }
         }
@@ -30,7 +31,95 @@
     ],
     "transform": {
       "position": {
-        "x": 569.3776,
+        "x": 483.5024,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "zIndex": 5,
+    "line": 1,
+    "objectType": "ZOMBIE"
+  },
+  {
+    "name": "new GameObject",
+    "components": [
+      {
+        "type": "components.Movement",
+        "properties": {
+          "velocity": {
+            "x": 50.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "components.Bounds",
+        "properties": {
+          "width": 85.0,
+          "height": 142.0
+        }
+      },
+      {
+        "type": "components.Sprite",
+        "properties": {
+          "width": 85,
+          "height": 142,
+          "index": 0,
+          "file_path": "assets/zombies/zombie_move.png",
+          "isSubImage": true
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 369.15134,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "zIndex": 5,
+    "line": 1,
+    "objectType": "ZOMBIE"
+  },
+  {
+    "name": "new GameObject",
+    "components": [
+      {
+        "type": "components.Movement",
+        "properties": {
+          "velocity": {
+            "x": 50.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "components.Bounds",
+        "properties": {
+          "width": 85.0,
+          "height": 142.0
+        }
+      },
+      {
+        "type": "components.Sprite",
+        "properties": {
+          "width": 85,
+          "height": 142,
+          "index": 0,
+          "file_path": "assets/zombies/zombie_move.png",
+          "isSubImage": true
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 188.58957,
         "y": 100.0
       },
       "scale": {

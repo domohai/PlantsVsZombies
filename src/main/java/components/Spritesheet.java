@@ -18,7 +18,7 @@ public class Spritesheet {
 				int imgX = (col * tileW);
 				int imgY = 0;
 				Sprite sprite = new Sprite();
-				sprite.createSpriteFromImage(parent.image.getSubimage(imgX, imgY, tileW, tileH));
+				sprite.createSpriteFromImage(parent.image.getSubimage(imgX, imgY, tileW, tileH), file_path, count);
 				sprites.add(sprite);
 				count++;
 				if (count > size - 1) break;

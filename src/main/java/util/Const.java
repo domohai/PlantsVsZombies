@@ -7,7 +7,7 @@ public class Const {
 	
 	public static final int ZOMBIE_HEIGHT = 142;
 	public static final int ZOMBIE_WIDTH = 85;
-	public static final int ZOMBIE_SPEED = 20;
+	public static final int ZOMBIE_SPEED = 50;
 	
 	public static final int BULLET_SPEED = 0;
 	

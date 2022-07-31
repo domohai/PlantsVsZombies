@@ -6,13 +6,15 @@ import util.AssetPool;
 import util.Const;
 import util.Vector2D;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class PlayScene extends Scene {
-	//GameObject test;
+	private GameObject test;
 	
 	public PlayScene(String name) {
 		super(name);
@@ -35,7 +37,7 @@ public class PlayScene extends Scene {
 		vector2D.setValue(600.0f, 100.0f);
 		Transform transform = new Transform();
 		transform.setValue(vector2D);
-		test = new GameObject("new GameObject", transform, 5, Type.ZOMBIE , 1);
+		test = new GameObject("new GameObject", transform, 5, Type.ZOMBIE, 1);
 		
 		Spritesheet spritesheet = AssetPool.getSpritesheet("assets/zombies/zombie_move.png");
 		test.addComponent(spritesheet.getSprite(0));
@@ -49,19 +51,12 @@ public class PlayScene extends Scene {
 		Bounds bounds = new Bounds();
 		bounds.setValue(Const.ZOMBIE_WIDTH, Const.ZOMBIE_HEIGHT);
 		test.addComponent(bounds);
-		//this.addZombie(test);
-		this.addGameObject(test);
+		this.addZombie(test);
+		//this.addGameObject(test);
 		
-		/*
-		Gson gson = new GsonBuilder().setPrettyPrinting()
-				.registerTypeAdapter(Component.class, new ComponentDeserializer())
-				.registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
-				.create();
-		System.out.println(gson.toJson(test));
-		
-		 */
 	}
 	
+	@Override
 	public void load_Resources() {
 		new Spritesheet("assets/zombies/zombie_move.png", Const.ZOMBIE_WIDTH, Const.ZOMBIE_HEIGHT, 14, 14);
 		new Spritesheet("assets/bg1.jpg", 1400, 600, 1, 1);
@@ -81,6 +76,10 @@ public class PlayScene extends Scene {
 		for (GameObject g : this.gameObjects) {
 			g.update(dt);
 		}
+		// press Enter to save game
+		if (KeyListener.get().is_keyPressed(KeyEvent.VK_ENTER)) {
+			this.save();
+		}
 	}
 	
 	@Override
@@ -96,9 +95,17 @@ public class PlayScene extends Scene {
 				.create();
 		try {
 			FileWriter writer = new FileWriter("data.txt");
+			
 			writer.write(gson.toJson(this.gameObjects));
-			//writer.write(gson.toJson(this.zombies));
-			//writer.write(gson.toJson(this.plants));
+			for (Integer i : this.zombies.keySet()) {
+				for (int j = 0; j < this.zombies.get(i).size(); j++) {
+					writer.write(gson.toJson(this.zombies.get(i)));
+				}
+				for (int j = 0; j < this.plants.get(i).size(); j++) {
+					writer.write(gson.toJson(this.plants.get(i)));
+				}
+			}
+			
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -118,16 +125,30 @@ public class PlayScene extends Scene {
 			e.printStackTrace();
 		}
 		if (!inFile.equals("")) {
-			GameObject[] Objects1 = gson.fromJson(inFile, GameObject[].class);
-			// TODO: find a way to separate zombies and plants
-			for (int i = 0; i < Objects1.length; i++) {
-				if (Objects1[i].getObjectType() == Type.ZOMBIE) {
-					this.addZombie(Objects1[i]);
-				} else if (Objects1[i].getObjectType() == Type.PLANT) {
-					this.addPlant(Objects1[i]);
-				} else {
-					this.addGameObject(Objects1[i]);
+			GameObject[] Objects = gson.fromJson(inFile, GameObject[].class);
+			
+			for (int i = 0; i < Objects.length; i++) {
+				Sprite sprite = Objects[i].getComponent(Sprite.class);
+				if (sprite != null && sprite.isSubImage) {
+					String file_path = sprite.file_path;
+					int index = sprite.index;
+					Spritesheet spritesheet = AssetPool.getSpritesheet(file_path);
+					sprite = spritesheet.getSprite(index).copy();
+					// remove old Sprite which does not have image
+					Objects[i].removeComponent(Sprite.class);
+					if (sprite != null) {
+						Objects[i].addComponent(sprite);
+					}
 				}
+				
+				if (Objects[i].getObjectType() == Type.ZOMBIE) {
+					this.addZombie(Objects[i]);
+				} else if (Objects[i].getObjectType() == Type.PLANT) {
+					this.addPlant(Objects[i]);
+				} else {
+					this.addGameObject(Objects[i]);
+				}
+				//this.addGameObject(Objects[i]);
 			}
 		}
 		this.dataLoaded = true;
@@ -163,6 +184,39 @@ public class PlayScene extends Scene {
 			this.zombies.get(line).add(zombie);
 			if (isRunning) zombie.start();
 			renderer.submit(zombie);
+		}
+	}
+	
+	@Override
+	public void addPlant(GameObject plant) {
+		Bounds bounds = plant.getComponent(Bounds.class);
+		if (bounds == null) {
+			System.out.println("Forgot to add Bounds to plant!");
+		} else {
+			int line = plant.getLine();
+			switch (line) {
+				case 1:
+					plant.transform.position.y = Const.LINE_1 - bounds.height;
+					break;
+				case 2:
+					plant.transform.position.y = Const.LINE_2 - bounds.height;
+					break;
+				case 3:
+					plant.transform.position.y = Const.LINE_3 - bounds.height;
+					break;
+				case 4:
+					plant.transform.position.y = Const.LINE_4 - bounds.height;
+					break;
+				case 5:
+					plant.transform.position.y = Const.LINE_5 - bounds.height;
+					break;
+				default:
+					System.out.println("Not a valid line: " + line);
+					break;
+			}
+			this.plants.get(line).add(plant);
+			if (isRunning) plant.start();
+			renderer.submit(plant);
 		}
 	}
 }

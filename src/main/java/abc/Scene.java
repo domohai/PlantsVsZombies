@@ -1,13 +1,5 @@
 package abc;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import components.Bounds;
-import util.Const;
 import java.awt.Graphics2D;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +13,6 @@ public abstract class Scene {
 	protected Map<Integer, List<GameObject>> zombies;
 	protected Renderer renderer;
 	protected boolean dataLoaded = false;
-	protected GameObject test;
 	
 	public Scene(String name) {
 		this.name = name;
@@ -61,41 +52,11 @@ public abstract class Scene {
 	public abstract void update(double dt);
 	public abstract void draw(Graphics2D g2D);
 	
-	public void load() {}
+	public void load_Resources() {}
 	
+	public void load() {}
 	public void save() {}
 	
 	public void addZombie(GameObject zombie) {}
-	
-	public void addPlant(GameObject plant) {
-		Bounds bounds = plant.getComponent(Bounds.class);
-		if (bounds == null) {
-			System.out.println("Forgot to add Bounds to plant!");
-		} else {
-			int line = plant.getLine();
-			switch (line) {
-				case 1:
-					plant.transform.position.y = Const.LINE_1 - bounds.height;
-					break;
-				case 2:
-					plant.transform.position.y = Const.LINE_2 - bounds.height;
-					break;
-				case 3:
-					plant.transform.position.y = Const.LINE_3 - bounds.height;
-					break;
-				case 4:
-					plant.transform.position.y = Const.LINE_4 - bounds.height;
-					break;
-				case 5:
-					plant.transform.position.y = Const.LINE_5 - bounds.height;
-					break;
-				default:
-					System.out.println("Not a valid line: " + line);
-					break;
-			}
-			this.plants.get(line).add(plant);
-			if (isRunning) plant.start();
-			renderer.submit(plant);
-		}
-	}
+	public void addPlant(GameObject plant) {}
 }

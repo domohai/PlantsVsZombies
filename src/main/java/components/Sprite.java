@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class Sprite extends Component {
-	public int width = 0, height = 0;
+	public int width = 0, height = 0, index = -1;
 	public String file_path = "";
 	public boolean isSubImage = false;
 	public transient BufferedImage image = null;
@@ -28,11 +28,22 @@ public class Sprite extends Component {
 		this.height = this.image.getHeight();
 	}
 	
-	public void createSpriteFromImage(BufferedImage image) {
+	public void createSpriteFromImage(BufferedImage image, String file_path, int index) {
 		this.image = image;
+		this.file_path = file_path;
+		this.index = index;
 		this.isSubImage = true;
 		this.width = image.getWidth();
 		this.height = image.getHeight();
+	}
+	
+	public Sprite copy() {
+		if (this.isSubImage) {
+			Sprite sprite = new Sprite();
+			sprite.createSpriteFromImage(this.image, this.file_path, this.index);
+			return sprite;
+		}
+		return null;
 	}
 	
 	@Override
