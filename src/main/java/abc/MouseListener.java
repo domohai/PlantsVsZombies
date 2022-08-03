@@ -30,12 +30,14 @@ public class MouseListener extends MouseAdapter implements java.awt.event.MouseL
 	@Override
 	public void mousePressed(MouseEvent e) {
 		this.mousePressed = true;
+		this.mouseButtonPressed[e.getButton()] = true;
 	}
 	
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		this.mousePressed = false;
 		this.mouseDragged = false;
+		this.mouseButtonPressed[e.getButton()] = false;
 		this.dx = 0.0f;
 		this.dy = 0.0f;
 	}
@@ -49,6 +51,7 @@ public class MouseListener extends MouseAdapter implements java.awt.event.MouseL
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		this.mouseDragged = true;
+		this.mouseButtonPressed[e.getButton()] = true;
 		this.dx = e.getX() - this.x;
 		this.dy = e.getY() - this.y;
 	}

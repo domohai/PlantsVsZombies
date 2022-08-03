@@ -1,5 +1,4 @@
 package components;
-import abc.Component;
 import util.Const;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -19,10 +18,22 @@ public class Ground extends Component {
 					(int)this.gameObject.transform.position.y, 1400, 600, null);
 		g2D.setColor(Color.BLACK);
 		g2D.setStroke(new BasicStroke(1.0f));
-		float lineHeight = 165.0f;
-		for (int i = 0; i < 5; i++) {
-			g2D.draw(new Line2D.Float(0.0f, lineHeight, Const.SCREEN_WIDTH, lineHeight));
-			lineHeight += 99.0f;
+		// HORIZONTAL LINES
+		float line = 70.0f;
+		for (int i = 0; i < 6; i++) {
+			g2D.draw(new Line2D.Float(0.0f, line, Const.SCREEN_WIDTH, line));
+			line += 99.0f;
 		}
+		// VERTICAL LINES
+		line = 60.0f;
+		for (int i = 0; i < 10; i++) {
+			g2D.draw(new Line2D.Float(line, 0.0f, line, Const.SCREEN_HEIGHT));
+			line += 80.0f;
+		}
+	}
+	
+	@Override
+	public Component copy() {
+		return null;
 	}
 }

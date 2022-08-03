@@ -1,5 +1,4 @@
 package components;
-import abc.Component;
 
 public class Bounds extends Component {
 	public float width, height;
@@ -12,5 +11,12 @@ public class Bounds extends Component {
 	@Override
 	public void update(double dt) {
 	
+	}
+	
+	@Override
+	public Component copy() {
+		Bounds copy = new Bounds();
+		copy.setValue(this.width, this.height);
+		return copy;
 	}
 }

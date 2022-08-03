@@ -1,5 +1,4 @@
 package components;
-import abc.Component;
 import util.AssetPool;
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;

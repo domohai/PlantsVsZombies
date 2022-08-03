@@ -8,13 +8,20 @@ public class Const {
 	public static final int ZOMBIE_HEIGHT = 142;
 	public static final int ZOMBIE_WIDTH = 85;
 	public static final int ZOMBIE_SPEED = 50;
-	
 	public static final int BULLET_SPEED = 0;
 	
-	public static final float LINE_1 = 165.0f;
-	public static final float LINE_2 = 264.0f;
-	public static final float LINE_3 = 363.0f;
-	public static final float LINE_4 = 462.0f;
-	public static final float LINE_5 = 561.0f;
+	public static final int YARD_X = 60;
+	public static final int YARD_WIDTH = 740;
+	public static final int YARD_Y = 70;
+	public static final int YARD_HEIGHT = 565;
+	
+	public static final int GRID_W = 80;
+	public static final int GRID_H = 99;
+	
+	public static final float LINE_1 = 169.0f;
+	public static final float LINE_2 = 268.0f;
+	public static final float LINE_3 = 367.0f;
+	public static final float LINE_4 = 466.0f;
+	public static final float LINE_5 = 565.0f;
 	
 }

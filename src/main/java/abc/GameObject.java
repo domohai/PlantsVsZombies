@@ -1,4 +1,6 @@
 package abc;
+import components.Component;
+
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,7 @@ public class GameObject {
 	private List<Component> components;
 	public Transform transform;
 	private int zIndex;
-	private int line;
+	public int line;
 	private Type objectType;
 	
 	public GameObject(String name, int zIndex) {
@@ -81,7 +83,15 @@ public class GameObject {
 	}
 	
 	public GameObject copy() {
-		return null;
+		Transform transformCopy = this.transform.copy();
+		GameObject copyGameObject = new GameObject("Copy GameObject", transformCopy, this.zIndex, this.objectType, this.line);
+		for (Component c : this.components) {
+			Component copy = c.copy();
+			if (copy != null) {
+				copyGameObject.addComponent(copy);
+			}
+		}
+		return copyGameObject;
 	}
 	
 	public int getzIndex() {
@@ -90,10 +100,6 @@ public class GameObject {
 	
 	public Type getObjectType() {
 		return this.objectType;
-	}
-	
-	public int getLine() {
-		return this.line;
 	}
 	
 }

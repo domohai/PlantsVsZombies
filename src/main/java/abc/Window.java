@@ -39,6 +39,10 @@ public class Window extends JFrame implements Runnable {
 		return Window.window;
 	}
 	
+	public static Scene getScene() {
+		return Window.currentScene;
+	}
+	
 	public static void changeScene(SceneState newScene) {
 		switch (newScene) {
 			case MENU:
@@ -51,6 +55,7 @@ public class Window extends JFrame implements Runnable {
 				System.out.println("Not a valid scene" + newScene);
 				break;
 		}
+		currentScene.load();
 		currentScene.init();
 		currentScene.start();
 	}
@@ -82,7 +87,6 @@ public class Window extends JFrame implements Runnable {
 		double lastFrameTime = 0.0;
 		double time;
 		double delta_time;
-		currentScene.load();
 		try {
 			while (isRunning) {
 				time = Time.getTime();
@@ -93,6 +97,7 @@ public class Window extends JFrame implements Runnable {
 				
 				Thread.sleep(15);
 			}
+			//currentScene.save();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Something wrong with Thread.sleep!");

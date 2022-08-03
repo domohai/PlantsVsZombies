@@ -7,14 +7,13 @@ import util.Const;
 import util.Vector2D;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class PlayScene extends Scene {
-	private GameObject test;
+	private GameObject test = null, snapToGrid = null;
 	
 	public PlayScene(String name) {
 		super(name);
@@ -23,6 +22,8 @@ public class PlayScene extends Scene {
 	@Override
 	public void init() {
 		load_Resources();
+		if (dataLoaded) return;
+		
 		// add ground
 		Vector2D groundVector = new Vector2D();
 		groundVector.setValue(-200.0f, 0.0f);
@@ -52,15 +53,23 @@ public class PlayScene extends Scene {
 		bounds.setValue(Const.ZOMBIE_WIDTH, Const.ZOMBIE_HEIGHT);
 		test.addComponent(bounds);
 		this.addZombie(test);
-		//this.addGameObject(test);
 		
+		Sprite sprite = AssetPool.getSpritesheet("assets/plants/sunflower.png").getSprite(0);
+		Vector2D mouseVec = new Vector2D();
+		mouseVec.setValue(0, 0);
+		Transform mouseTransform = new Transform();
+		mouseTransform.setValue(mouseVec);
+		snapToGrid = new GameObject("mouse", mouseTransform, 2, Type.PLANT, 0);
+		snapToGrid.addComponent(sprite);
+		snapToGrid.addComponent(new SnapToGrid());
 	}
 	
 	@Override
 	public void load_Resources() {
 		new Spritesheet("assets/zombies/zombie_move.png", Const.ZOMBIE_WIDTH, Const.ZOMBIE_HEIGHT, 14, 14);
 		new Spritesheet("assets/bg1.jpg", 1400, 600, 1, 1);
-	
+		new Spritesheet("assets/plants/sunflower.png", 75, 90, 6, 6);
+		
 	}
 	
 	@Override
@@ -76,6 +85,7 @@ public class PlayScene extends Scene {
 		for (GameObject g : this.gameObjects) {
 			g.update(dt);
 		}
+		snapToGrid.update(dt);
 		// press Enter to save game
 		if (KeyListener.get().is_keyPressed(KeyEvent.VK_ENTER)) {
 			this.save();
@@ -85,6 +95,7 @@ public class PlayScene extends Scene {
 	@Override
 	public void draw(Graphics2D g2D) {
 		renderer.render(g2D);
+		snapToGrid.draw(g2D);
 	}
 	
 	@Override
@@ -96,7 +107,7 @@ public class PlayScene extends Scene {
 		try {
 			FileWriter writer = new FileWriter("data.txt");
 			
-			writer.write(gson.toJson(this.gameObjects));
+			//writer.write(gson.toJson(this.gameObjects));
 			for (Integer i : this.zombies.keySet()) {
 				for (int j = 0; j < this.zombies.get(i).size(); j++) {
 					writer.write(gson.toJson(this.zombies.get(i)));
@@ -150,8 +161,8 @@ public class PlayScene extends Scene {
 				}
 				//this.addGameObject(Objects[i]);
 			}
+			this.dataLoaded = true;
 		}
-		this.dataLoaded = true;
 	}
 	
 	@Override
@@ -160,7 +171,7 @@ public class PlayScene extends Scene {
 		if (bounds == null) {
 			System.out.println("Forgot to add Bounds to zombie!");
 		} else {
-			int line = zombie.getLine();
+			int line = zombie.line;
 			switch (line) {
 				case 1:
 					zombie.transform.position.y = Const.LINE_1 - bounds.height + 10;
@@ -193,7 +204,7 @@ public class PlayScene extends Scene {
 		if (bounds == null) {
 			System.out.println("Forgot to add Bounds to plant!");
 		} else {
-			int line = plant.getLine();
+			int line = plant.line;
 			switch (line) {
 				case 1:
 					plant.transform.position.y = Const.LINE_1 - bounds.height;
