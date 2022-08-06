@@ -1,0 +1,151 @@
+[
+  {
+    "name": "new GameObject",
+    "components": [
+      {
+        "type": "components.Sprite",
+        "properties": {
+          "width": 85,
+          "height": 142,
+          "index": 0,
+          "file_path": "assets/zombies/zombie_move.png",
+          "isSubImage": true
+        }
+      },
+      {
+        "type": "components.Movement",
+        "properties": {
+          "velocity": {
+            "x": 50.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "components.Bounds",
+        "properties": {
+          "width": 85.0,
+          "height": 142.0
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 341.0558,
+        "y": 37.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "zIndex": 4,
+    "line": 1,
+    "objectType": "ZOMBIE"
+  },
+  {
+    "name": "SpriteObject",
+    "components": [
+      {
+        "type": "components.Sprite",
+        "properties": {
+          "width": 75,
+          "height": 90,
+          "index": 0,
+          "file_path": "assets/plants/sunflower.png",
+          "isSubImage": true
+        }
+      },
+      {
+        "type": "components.Bounds",
+        "properties": {
+          "width": 75.0,
+          "height": 90.0
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 60.0,
+        "y": 178.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "zIndex": 5,
+    "line": 2,
+    "objectType": "PLANT"
+  },
+  {
+    "name": "SpriteObject",
+    "components": [
+      {
+        "type": "components.Sprite",
+        "properties": {
+          "width": 75,
+          "height": 90,
+          "index": 0,
+          "file_path": "assets/plants/pea.png",
+          "isSubImage": true
+        }
+      },
+      {
+        "type": "components.Bounds",
+        "properties": {
+          "width": 75.0,
+          "height": 90.0
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 140.0,
+        "y": 277.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "zIndex": 5,
+    "line": 3,
+    "objectType": "PLANT"
+  },
+  {
+    "name": "SpriteObject",
+    "components": [
+      {
+        "type": "components.Sprite",
+        "properties": {
+          "width": 75,
+          "height": 90,
+          "index": 0,
+          "file_path": "assets/plants/snowpea.png",
+          "isSubImage": true
+        }
+      },
+      {
+        "type": "components.Bounds",
+        "properties": {
+          "width": 75.0,
+          "height": 90.0
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 220.0,
+        "y": 277.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "zIndex": 5,
+    "line": 3,
+    "objectType": "PLANT"
+  }
+]

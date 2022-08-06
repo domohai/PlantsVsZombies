@@ -13,7 +13,7 @@ public class MouseListener extends MouseAdapter implements java.awt.event.MouseL
 	private MouseListener() {
 		this.mousePressed = false;
 		this.mouseDragged = false;
-		this.mouseButtonPressed = new boolean[3];
+		this.mouseButtonPressed = new boolean[9];
 		this.x = 0;
 		this.y = 0;
 		this.dx = 0;

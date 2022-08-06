@@ -1,4 +1,7 @@
 package abc;
+import scenes.MenuScene;
+import scenes.PlayScene;
+import scenes.Scene;
 import util.Const;
 import util.Time;
 import javax.swing.JFrame;
@@ -55,6 +58,7 @@ public class Window extends JFrame implements Runnable {
 				System.out.println("Not a valid scene" + newScene);
 				break;
 		}
+		currentScene.load_Resources();
 		currentScene.load();
 		currentScene.init();
 		currentScene.start();

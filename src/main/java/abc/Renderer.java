@@ -18,8 +18,8 @@ public class Renderer {
 	}
 	
 	public void submit(GameObject newGameObject) {
-		this.gameObjects.computeIfAbsent(newGameObject.getzIndex(), (x) -> new ArrayList<>());
-		this.gameObjects.get(newGameObject.getzIndex()).add(newGameObject);
+		this.gameObjects.computeIfAbsent(newGameObject.zIndex, (x) -> new ArrayList<>());
+		this.gameObjects.get(newGameObject.zIndex).add(newGameObject);
 	}
 	
 	public void render(Graphics2D g2D) {

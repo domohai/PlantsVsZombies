@@ -1,7 +1,17 @@
 package util;
 
 public class Vector2D {
-	public float x = 0.0f, y = 0.0f;
+	public float x, y;
+	
+	public Vector2D() {
+		this.x = 0;
+		this.y = 0;
+	}
+	
+	public Vector2D(float x, float y) {
+		this.x = x;
+		this.y = y;
+	}
 	
 	public void setValue(float x, float y) {
 		this.x = x;

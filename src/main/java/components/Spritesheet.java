@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Spritesheet {
-	private List<Sprite> sprites;
+	public List<Sprite> sprites;
 	public int tileW, tileH;
 	
 	public Spritesheet(String file_path, int tileW, int tileH, int columns, int size) {

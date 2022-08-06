@@ -1,5 +1,9 @@
-package abc;
-import java.awt.Graphics2D;
+package scenes;
+
+import abc.GameObject;
+import abc.Renderer;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,12 +22,7 @@ public abstract class Scene {
 		this.name = name;
 		this.gameObjects = new ArrayList<>();
 		this.renderer = new Renderer();
-		this.plants = new HashMap<>();
-		this.zombies = new HashMap<>();
-		for (Integer i = 1; i < 6; i++) {
-			this.plants.put(i, new ArrayList<>());
-			this.zombies.put(i, new ArrayList<>());
-		}
+		
 	}
 	
 	public void init() {}

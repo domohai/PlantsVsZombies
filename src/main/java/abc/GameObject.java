@@ -1,21 +1,16 @@
 package abc;
 import components.Component;
-
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
-
-enum Type {
-	ZOMBIE, PLANT, OTHER
-}
 
 public class GameObject {
 	private String name;
 	private List<Component> components;
 	public Transform transform;
-	private int zIndex;
+	public int zIndex;
 	public int line;
-	private Type objectType;
+	public Type objectType;
 	
 	public GameObject(String name, int zIndex) {
 		this.name = name;
@@ -58,6 +53,10 @@ public class GameObject {
 		newComponent.gameObject = this;
 	}
 	
+	public List<Component> getAllComponent() {
+		return this.components;
+	}
+	
 	public <T extends Component> T getComponent(Class<T> componentClass) {
 		for (Component c : this.components) {
 			if (componentClass.isAssignableFrom(c.getClass())) {
@@ -92,14 +91,6 @@ public class GameObject {
 			}
 		}
 		return copyGameObject;
-	}
-	
-	public int getzIndex() {
-		return this.zIndex;
-	}
-	
-	public Type getObjectType() {
-		return this.objectType;
 	}
 	
 }

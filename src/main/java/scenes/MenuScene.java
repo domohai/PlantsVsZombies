@@ -1,7 +1,8 @@
-package abc;
-import java.awt.Graphics2D;
+package scenes;
 
-public class MenuScene extends Scene{
+import java.awt.*;
+
+public class MenuScene extends Scene {
 	
 	public MenuScene(String name) {
 		super(name);
