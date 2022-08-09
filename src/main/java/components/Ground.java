@@ -1,9 +1,6 @@
 package components;
-import util.Const;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Line2D;
+
+import java.awt.*;
 
 public class Ground extends Component {
 	private Spritesheet groundSprite;
@@ -16,6 +13,7 @@ public class Ground extends Component {
 	public void draw(Graphics2D g2D) {
 		g2D.drawImage(this.groundSprite.getSprite(0).image, (int) this.gameObject.transform.position.x,
 					(int)this.gameObject.transform.position.y, 1400, 600, null);
+		/*
 		g2D.setColor(Color.BLACK);
 		g2D.setStroke(new BasicStroke(1.0f));
 		// HORIZONTAL LINES
@@ -30,6 +28,7 @@ public class Ground extends Component {
 			g2D.draw(new Line2D.Float(line, 0.0f, line, Const.SCREEN_HEIGHT));
 			line += 80.0f;
 		}
+		*/
 	}
 	
 	@Override

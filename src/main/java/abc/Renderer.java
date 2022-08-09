@@ -22,6 +22,10 @@ public class Renderer {
 		this.gameObjects.get(newGameObject.zIndex).add(newGameObject);
 	}
 	
+	public void destroy(GameObject object) {
+		// TODO: add destroy GameObject here
+	}
+	
 	public void render(Graphics2D g2D) {
 		// loop through keySet to get max and min zIndex
 		this.minValue = Integer.MAX_VALUE;

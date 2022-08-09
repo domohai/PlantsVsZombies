@@ -7,6 +7,7 @@ import java.util.List;
 public class GameObject {
 	private String name;
 	private List<Component> components;
+	public boolean isDead = false;
 	public Transform transform;
 	public int zIndex;
 	public int line;
@@ -45,6 +46,13 @@ public class GameObject {
 	public void draw(Graphics2D g2D) {
 		for (Component c : this.components) {
 			c.draw(g2D);
+		}
+	}
+	
+	public void destroy() {
+		this.isDead = true;
+		for (int i = 0; i < this.components.size(); i++) {
+			this.components.get(i).destroy();
 		}
 	}
 	

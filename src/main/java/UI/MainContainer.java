@@ -1,5 +1,6 @@
 package UI;
 import abc.GameObject;
+import abc.Transform;
 import components.Component;
 import components.Sprite;
 import components.Spritesheet;
@@ -12,10 +13,11 @@ import java.util.List;
 
 public class MainContainer extends Component {
 	private List<GameObject> menuItems;
-	private Sprite containerSprite = null;
+	private Sprite containerSprite;
 	
 	public MainContainer() {
 		this.menuItems = new ArrayList<>();
+		containerSprite = AssetPool.getSprite("assets/ui/SeedBank.png");
 		init();
 	}
 	
@@ -28,18 +30,19 @@ public class MainContainer extends Component {
 		int col = 0;
 		for (int i = 0; i < buttonSprites.sprites.size(); i++) {
 			Sprite currentSprite = buttonSprites.sprites.get(i);
-			int x = 100 + col * Const.BUTTON_WIDTH + col * 5;
+			
+			int x = 130 + col * Const.BUTTON_WIDTH + col * 5;
 			int y = 5;
 			
-			Vector2D vector2D = new Vector2D();
-			vector2D.setValue(x, y);
-			GameObject newObject = new GameObject("Item", 4);
-			newObject.transform.setValue(vector2D);
+			Transform transform = new Transform(new Vector2D(x, y), new Vector2D(1.0f, 1.0f));
+			GameObject newObject = new GameObject("Item", Const.CONTAINER_ZINDEX);
+			newObject.transform = transform;
 			newObject.addComponent(currentSprite.copy());
+			
 			MenuItem menuItem = new MenuItem(x, y, Const.BUTTON_WIDTH, Const.BUTTON_HEIGHT, currentSprite, null);
-			if (col == 0) menuItem.itemSprite = itemSprites.getSprite(0);
-			else if (col == 1) menuItem.itemSprite = itemSprites1.getSprite(0);
-			else if (col == 2) menuItem.itemSprite = itemSprites2.getSprite(0);
+			if (col == 0) menuItem.itemSpritesheet = itemSprites;
+			else if (col == 1) menuItem.itemSpritesheet = itemSprites1;
+			else if (col == 2) menuItem.itemSpritesheet = itemSprites2;
 			newObject.addComponent(menuItem);
 			menuItems.add(newObject);
 			col++;
@@ -63,6 +66,8 @@ public class MainContainer extends Component {
 	
 	@Override
 	public void draw(Graphics2D g2D) {
+		g2D.drawImage(containerSprite.image, (int) this.gameObject.transform.position.x, (int) this.gameObject.transform.position.y,
+				this.containerSprite.width, this.containerSprite.height, null);
 		for (GameObject g : this.menuItems) {
 			g.draw(g2D);
 		}

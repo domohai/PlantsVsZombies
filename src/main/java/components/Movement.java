@@ -2,9 +2,13 @@ package components;
 import util.Vector2D;
 
 public class Movement extends Component {
-	public Vector2D velocity = new Vector2D();
+	public Vector2D velocity;
 	
-	public void setValue(Vector2D velocity) {
+	public Movement() {
+		this.velocity = new Vector2D();
+	}
+	
+	public Movement(Vector2D velocity) {
 		this.velocity = velocity;
 	}
 	

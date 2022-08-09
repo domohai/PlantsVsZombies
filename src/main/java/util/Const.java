@@ -8,10 +8,13 @@ public class Const {
 	public static final int ZOMBIE_HEIGHT = 142;
 	public static final int ZOMBIE_WIDTH = 85;
 	public static final int ZOMBIE_SPEED = 50;
+	public static final int ZOMBIE_HP = 100;
+	
 	public static final int BULLET_SPEED = 0;
 	
 	public static final int PLANT_WIDTH = 75;
 	public static final int PLANT_HEIGHT = 90;
+	public static final int PLANT_HP = 100;
 	
 	public static final int YARD_X = 60;
 	public static final int YARD_WIDTH = 740;
@@ -30,12 +33,15 @@ public class Const {
 	public static final int BUTTON_WIDTH = 54;
 	public static final int BUTTON_HEIGHT = 75;
 	
-	public static final int CONTAINER_OFFSET_Y = 110;
+	public static final int CONTAINER_OFFSET_Y = 115;
 	public static final int TOOLBAR_TOP = 30;
 	
 	public static final int ZOMBIE_ZINDEX = 4;
-	public static final int PLANT_ZINDEX = 3;
+	public static final int PLANT_ZINDEX = 2;
 	public static final int MOUSE_ZINDEX = 5;
 	public static final int GROUND_ZINDEX = -5;
+	public static final int CONTAINER_ZINDEX = 3;
+	
+	public static final float DEFAULT_FRAME_TIME = 0.18f;
 	
 }

@@ -3,7 +3,11 @@ package components;
 public class Rigidbody extends Component {
 	public int HP;
 	
-	public void setValue(int HP) {
+	public Rigidbody() {
+		this.HP = 0;
+	}
+	
+	public Rigidbody(int HP) {
 		this.HP = HP;
 	}
 	
@@ -14,9 +18,7 @@ public class Rigidbody extends Component {
 	
 	@Override
 	public Component copy() {
-		Rigidbody copy = new Rigidbody();
-		copy.setValue(this.HP);
-		return copy;
+		return new Rigidbody(this.HP);
 	}
 	
 }

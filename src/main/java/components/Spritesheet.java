@@ -6,11 +6,13 @@ import java.util.List;
 public class Spritesheet {
 	public List<Sprite> sprites;
 	public int tileW, tileH;
+	public String file_path;
 	
 	public Spritesheet(String file_path, int tileW, int tileH, int columns, int size) {
 		this.tileW = tileW;
 		this.tileH = tileH;
 		this.sprites = new ArrayList<>();
+		this.file_path = file_path;
 		Sprite parent = AssetPool.getSprite(file_path);
 		int count = 0;
 		while (count < size) {

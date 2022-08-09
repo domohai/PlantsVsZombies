@@ -2,8 +2,8 @@ package abc;
 import util.Vector2D;
 
 public class Transform {
-	public Vector2D position = new Vector2D();
-	public Vector2D scale = new Vector2D();
+	public Vector2D position;
+	public Vector2D scale;
 	
 	public Transform() {
 		this.position = new Vector2D();

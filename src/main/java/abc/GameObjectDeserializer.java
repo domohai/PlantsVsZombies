@@ -1,7 +1,6 @@
 package abc;
 import com.google.gson.*;
 import components.Component;
-
 import java.lang.reflect.Type;
 
 public class GameObjectDeserializer implements JsonDeserializer<GameObject> {

@@ -1,21 +1,17 @@
 package scenes;
-
 import UI.MainContainer;
 import abc.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonReader;
 import components.Component;
 import components.*;
 import util.AssetPool;
 import util.Const;
 import util.Vector2D;
-
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -25,7 +21,7 @@ import java.util.List;
 public class PlayScene extends Scene {
 	public GameObject test = null;
 	public MouseControl mouseControl = null;
-	public MainContainer mainContainer;
+	public GameObject mainContainer = null;
 	
 	public PlayScene(String name) {
 		super(name);
@@ -38,11 +34,30 @@ public class PlayScene extends Scene {
 	}
 	
 	@Override
+	public void start() {
+		for (Integer i = 1; i < 6; i++) {
+			for (GameObject g : this.plants.get(i)) {
+				g.start();
+			}
+			for (GameObject g : this.zombies.get(i)) {
+				g.start();
+			}
+		}
+		for (GameObject g : this.gameObjects) {
+			g.start();
+		}
+		this.isRunning = true;
+	}
+	
+	@Override
 	public void init() {
-		
-		mouseControl = new MouseControl();
-		mainContainer = new MainContainer();
-		mainContainer.start();
+		this.mouseControl = new MouseControl();
+		this.mainContainer = new GameObject("Container", Const.CONTAINER_ZINDEX);
+		MainContainer container = new MainContainer();
+		this.mainContainer.transform = new Transform(new Vector2D(50.0f, 0.0f), new Vector2D());
+		this.mainContainer.addComponent(container);
+		this.mainContainer.start();
+		this.renderer.submit(this.mainContainer);
 		
 		// add ground
 		GameObject ground = new GameObject("Background", new Transform(new Vector2D(-200.0f, 0.0f), new Vector2D()),
@@ -51,21 +66,10 @@ public class PlayScene extends Scene {
 		// the ground will not change position or something so just draw it
 		renderer.submit(ground);
 		
-		if (dataLoaded) return;
+		if (this.dataLoaded) return;
 		
-		test = new GameObject("new GameObject", new Transform(new Vector2D(600.0f, 100.0f), new Vector2D()),
-				Const.ZOMBIE_ZINDEX, Type.ZOMBIE, 1);
 		Spritesheet spritesheet = AssetPool.getSpritesheet("assets/zombies/zombie_move.png");
-		test.addComponent(spritesheet.getSprite(0));
-		
-		Vector2D moveVector = new Vector2D(Const.ZOMBIE_SPEED, 0.0f);
-		Movement movement = new Movement();
-		movement.setValue(moveVector);
-		test.addComponent(movement);
-		
-		Bounds bounds = new Bounds();
-		bounds.setValue(Const.ZOMBIE_WIDTH, Const.ZOMBIE_HEIGHT);
-		test.addComponent(bounds);
+		test = Prefabs.generateZombie(spritesheet.getSprite(0));
 		this.addZombie(test);
 		
 	}
@@ -84,22 +88,57 @@ public class PlayScene extends Scene {
 	
 	@Override
 	public void update(double dt) {
-		for (Integer i = 1; i < 6; i++) {
-			for (GameObject g : this.plants.get(i)) {
-				g.update(dt);
+		// get the nearest plant and check collision with all zombies on the same line
+		GameObject updateObject, nearestPlant;
+		for (int i = 1; i < 6; i++) {
+			if (this.plants.get(i).size() > 0) {
+				nearestPlant = this.plants.get(i).get(0);
+				for (int j = 0; j < this.plants.get(i).size(); j++) {
+					updateObject = this.plants.get(i).get(j);
+					updateObject.update(dt);
+					if (updateObject.isDead) {
+						this.plants.get(i).remove(j);
+						this.renderer.destroy(updateObject);
+						j--;
+					} else if (updateObject.transform.position.x > nearestPlant.transform.position.x) {
+						nearestPlant = updateObject;
+					}
+				}
+				if (this.zombies.get(i).size() > 0) {
+					for (GameObject g : this.zombies.get(i)) {
+						if (Bounds.checkCollision(nearestPlant.getComponent(Bounds.class), g.getComponent(Bounds.class))) {
+							System.out.println("Collision detected!");
+						}
+					}
+				}
 			}
-			for (GameObject g : this.zombies.get(i)) {
-				g.update(dt);
+			if (this.zombies.get(i).size() > 0) {
+				for (int j = 0; j < this.zombies.get(i).size(); j++) {
+					updateObject = this.zombies.get(i).get(j);
+					updateObject.update(dt);
+					if (updateObject.isDead) {
+						this.zombies.get(i).remove(j);
+						this.renderer.destroy(updateObject);
+						j--;
+					}
+				}
 			}
-			//System.out.println("zombie: " + this.zombies.get(i).size());
-			//System.out.println("plant: " + this.plants.get(i).size());
 		}
-		for (GameObject g : this.gameObjects) {
-			g.update(dt);
+		/*
+		if (this.gameObjects.size() > 0) {
+			for (int i = 0; i < this.gameObjects.size(); i++) {
+				updateObject = this.gameObjects.get(i);
+				updateObject.update(dt);
+				if (updateObject.isDead) {
+					this.gameObjects.remove(i);
+					this.renderer.destroy(updateObject);
+					i--;
+				}
+			}
 		}
-		//System.out.println(this.gameObjects.size());
-		mouseControl.update(dt);
-		mainContainer.update(dt);
+		*/
+		this.mouseControl.update(dt);
+		this.mainContainer.update(dt);
 		// press Enter to save game
 		if (KeyListener.get().is_keyPressed(KeyEvent.VK_ENTER)) {
 			this.save();
@@ -110,9 +149,8 @@ public class PlayScene extends Scene {
 	
 	@Override
 	public void draw(Graphics2D g2D) {
-		renderer.render(g2D);
-		mouseControl.draw(g2D);
-		mainContainer.draw(g2D);
+		this.renderer.render(g2D);
+		this.mouseControl.draw(g2D);
 	}
 	
 	@Override
@@ -121,36 +159,23 @@ public class PlayScene extends Scene {
 				.registerTypeAdapter(Component.class, new ComponentDeserializer())
 				.registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
 				.create();
-		List<GameObject> tempList = new ArrayList<>();
+		// add all objects to one list
+		List<GameObject> saveList = new ArrayList<>();
 		for (int i = 0; i < this.gameObjects.size(); i++) {
-			tempList.add(this.gameObjects.get(i));
+			saveList.add(this.gameObjects.get(i));
 		}
 		for (Integer i = 1; i < 6; i++) {
 			for (int j = 0; j < this.plants.get(i).size(); j++) {
-				tempList.add(this.plants.get(i).get(j));
+				saveList.add(this.plants.get(i).get(j));
 			}
 			for (int j = 0; j < this.zombies.get(i).size(); j++) {
-				tempList.add(this.zombies.get(i).get(j));
+				saveList.add(this.zombies.get(i).get(j));
 			}
 		}
+		
 		try {
 			FileWriter writer = new FileWriter("data.txt");
-			writer.write(gson.toJson(tempList));
-			/*
-			if (this.gameObjects.size() > 0) {
-				writer.write(gson.toJson(this.gameObjects));
-			}
-			for (Integer i  = 1; i < 6; i++) {
-				if (this.zombies.get(i).size() > 0) {
-					writer.write(gson.toJson(this.zombies.get(i)));
-				}
-			}
-			for (Integer i = 1; i < 6; i++) {
-				if (this.plants.get(i).size() > 0) {
-					writer.write(gson.toJson(this.plants.get(i)));
-				}
-			}
-			*/
+			writer.write(gson.toJson(saveList));
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -164,18 +189,29 @@ public class PlayScene extends Scene {
 				.registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
 				.create();
 		String inFile = "";
-		JsonReader reader = null;
 		try {
 			inFile = new String(Files.readAllBytes(Paths.get("data.txt")));
-			reader = new JsonReader(new StringReader(inFile));
-			reader.setLenient(true);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		if (!inFile.equals("")) {
 			GameObject[] Objects = gson.fromJson(inFile, GameObject[].class);
-			//System.out.println(Objects.length);
 			for (int i = 0; i < Objects.length; i++) {
+				StateMachine stateMachine = Objects[i].getComponent(StateMachine.class);
+				if (stateMachine != null) {
+					// TODO: bug fixing
+					String file_path = stateMachine.states.get(0).file_path;
+					Spritesheet spritesheet = AssetPool.getSpritesheet(file_path);
+					Objects[i].removeComponent(StateMachine.class);
+					StateMachine newStateMachine = new StateMachine();
+					AnimationState state = new AnimationState();
+					for (int j = 0; j < spritesheet.sprites.size(); j++) {
+						state.addFrame(spritesheet.getSprite(j), Const.DEFAULT_FRAME_TIME);
+					}
+					newStateMachine.addState(state);
+					Objects[i].addComponent(newStateMachine);
+				}
+				
 				Sprite sprite = Objects[i].getComponent(Sprite.class);
 				if (sprite != null && sprite.isSubImage) {
 					String file_path = sprite.file_path;
@@ -196,8 +232,6 @@ public class PlayScene extends Scene {
 				} else {
 					this.addGameObject(Objects[i]);
 				}
-				//this.addGameObject(Objects[i]);
-				
 			}
 			this.dataLoaded = true;
 		}
@@ -245,8 +279,8 @@ public class PlayScene extends Scene {
 		Bounds bounds = plant.getComponent(Bounds.class);
 		if (bounds == null) {
 			System.out.println("Forgot to add Bounds to plant!");
+			//return;
 		}
-		
 		this.plants.get(plant.line).add(plant);
 		if (this.isRunning) plant.start();
 		this.renderer.submit(plant);

@@ -6,10 +6,19 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class Sprite extends Component {
-	public int width = 0, height = 0, index = -1;
-	public String file_path = "";
-	public boolean isSubImage = false;
-	public transient BufferedImage image = null;
+	public int width, height, index;
+	public String file_path;
+	public boolean isSubImage;
+	public transient BufferedImage image;
+	
+	public Sprite() {
+		this.width = 0;
+		this.height = 0;
+		this.file_path = "";
+		this.isSubImage = false;
+		this.image = null;
+		this.index = -1;
+	}
 	
 	public void loadSprite(String file_path) {
 		File file = new File(file_path);
