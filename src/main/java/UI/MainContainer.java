@@ -24,8 +24,10 @@ public class MainContainer extends Component {
 	public void init() {
 		Spritesheet buttonSprites = AssetPool.getSpritesheet("assets/ui/seedrow.png");
 		Spritesheet itemSprites = AssetPool.getSpritesheet("assets/plants/sunflower.png");
-		Spritesheet itemSprites1 = AssetPool.getSpritesheet("assets/plants/pea.png");
-		Spritesheet itemSprites2 = AssetPool.getSpritesheet("assets/plants/snowpea.png");
+		Spritesheet itemSprites1 = AssetPool.getSpritesheet("assets/plants/peashooter_idle.png");
+		Spritesheet itemSprites2 = AssetPool.getSpritesheet("assets/plants/peashooter_shoot.png");
+		Spritesheet itemSprites3 = AssetPool.getSpritesheet("assets/plants/snowpeashooter_idle.png");
+		Spritesheet itemSprites4 = AssetPool.getSpritesheet("assets/plants/snowpeashooter_shoot.png");
 		
 		int col = 0;
 		for (int i = 0; i < buttonSprites.sprites.size(); i++) {
@@ -38,11 +40,16 @@ public class MainContainer extends Component {
 			GameObject newObject = new GameObject("Item", Const.CONTAINER_ZINDEX);
 			newObject.transform = transform;
 			newObject.addComponent(currentSprite.copy());
-			
 			MenuItem menuItem = new MenuItem(x, y, Const.BUTTON_WIDTH, Const.BUTTON_HEIGHT, currentSprite, null);
-			if (col == 0) menuItem.itemSpritesheet = itemSprites;
-			else if (col == 1) menuItem.itemSpritesheet = itemSprites1;
-			else if (col == 2) menuItem.itemSpritesheet = itemSprites2;
+			if (col == 0) {
+				menuItem.itemSpritesheet1 = itemSprites;
+			} else if (col == 1) {
+				menuItem.itemSpritesheet1 = itemSprites1;
+				menuItem.itemSpritesheet2 = itemSprites2;
+			} else if (col == 2) {
+				menuItem.itemSpritesheet1 = itemSprites3;
+				menuItem.itemSpritesheet2 = itemSprites4;
+			}
 			newObject.addComponent(menuItem);
 			menuItems.add(newObject);
 			col++;

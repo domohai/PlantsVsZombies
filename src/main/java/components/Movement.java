@@ -12,6 +12,10 @@ public class Movement extends Component {
 		this.velocity = velocity;
 	}
 	
+	public void setVelocity(Vector2D velocity) {
+		this.velocity = velocity;
+	}
+	
 	@Override
 	public void update(double dt) {
 		this.gameObject.transform.position.x -= this.velocity.x * dt;

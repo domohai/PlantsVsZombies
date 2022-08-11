@@ -44,7 +44,7 @@ public class Bounds extends Component {
 		b1.calculateCenter();
 		b2.calculateCenter();
 		float dx = b2.center.x - b1.center.x;
-		float combineHalfW = b1.halfW + b2.halfW - 5;
+		float combineHalfW = b1.halfW + b2.halfW - 18;
 		if (Math.abs(dx) <= combineHalfW) {
 			return true;
 		}

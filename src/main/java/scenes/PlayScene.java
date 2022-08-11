@@ -1,4 +1,5 @@
 package scenes;
+
 import UI.MainContainer;
 import abc.*;
 import com.google.gson.Gson;
@@ -68,8 +69,8 @@ public class PlayScene extends Scene {
 		
 		if (this.dataLoaded) return;
 		
-		Spritesheet spritesheet = AssetPool.getSpritesheet("assets/zombies/zombie_move.png");
-		test = Prefabs.generateZombie(spritesheet.getSprite(0));
+		test = Prefabs.generateZombie(AssetPool.getSpritesheet("assets/zombies/zombie_move.png"),
+				AssetPool.getSpritesheet("assets/zombies/zomattack.png"));
 		this.addZombie(test);
 		
 	}
@@ -79,10 +80,12 @@ public class PlayScene extends Scene {
 		new Spritesheet("assets/zombies/zombie_move.png", Const.ZOMBIE_WIDTH, Const.ZOMBIE_HEIGHT, 14, 14);
 		new Spritesheet("assets/bg1.jpg", 1400, 600, 1, 1);
 		new Spritesheet("assets/plants/sunflower.png", Const.PLANT_WIDTH, Const.PLANT_HEIGHT, 6, 6);
-		new Spritesheet("assets/plants/pea.png", Const.PLANT_WIDTH, Const.PLANT_HEIGHT, 13, 13);
-		new Spritesheet("assets/plants/snowpea.png", Const.PLANT_WIDTH, Const.PLANT_HEIGHT, 12, 12);
+		new Spritesheet("assets/plants/peashooter_idle.png", Const.PLANT_WIDTH, Const.PLANT_HEIGHT, 8, 8);
+		new Spritesheet("assets/plants/peashooter_shoot.png", Const.PLANT_WIDTH, Const.PLANT_HEIGHT, 13, 13);
+		new Spritesheet("assets/plants/snowpeashooter_idle.png", Const.PLANT_WIDTH, Const.PLANT_HEIGHT, 8, 8);
+		new Spritesheet("assets/plants/snowpeashooter_shoot.png", Const.PLANT_WIDTH, Const.PLANT_HEIGHT, 12, 12);
 		new Spritesheet("assets/ui/seedrow.png", 54, 75, 3, 3);
-	
+		new Spritesheet("assets/zombies/zomattack.png", Const.ZOMBIE_WIDTH + 10, Const.ZOMBIE_HEIGHT, 9, 9);
 	
 	}
 	
@@ -107,7 +110,8 @@ public class PlayScene extends Scene {
 				if (this.zombies.get(i).size() > 0) {
 					for (GameObject g : this.zombies.get(i)) {
 						if (Bounds.checkCollision(nearestPlant.getComponent(Bounds.class), g.getComponent(Bounds.class))) {
-							System.out.println("Collision detected!");
+							g.getComponent(Movement.class).setVelocity(new Vector2D());
+							g.getComponent(StateMachine.class).trigger("attack");
 						}
 					}
 				}
@@ -124,7 +128,6 @@ public class PlayScene extends Scene {
 				}
 			}
 		}
-		/*
 		if (this.gameObjects.size() > 0) {
 			for (int i = 0; i < this.gameObjects.size(); i++) {
 				updateObject = this.gameObjects.get(i);
@@ -136,15 +139,13 @@ public class PlayScene extends Scene {
 				}
 			}
 		}
-		*/
+		
 		this.mouseControl.update(dt);
 		this.mainContainer.update(dt);
 		// press Enter to save game
 		if (KeyListener.get().is_keyPressed(KeyEvent.VK_ENTER)) {
 			this.save();
 		}
-		//System.out.println(MouseListener.getX());
-		//System.out.println(MouseListener.getY());
 	}
 	
 	@Override
@@ -158,6 +159,7 @@ public class PlayScene extends Scene {
 		Gson gson = new GsonBuilder().setPrettyPrinting()
 				.registerTypeAdapter(Component.class, new ComponentDeserializer())
 				.registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
+				.enableComplexMapKeySerialization()
 				.create();
 		// add all objects to one list
 		List<GameObject> saveList = new ArrayList<>();
@@ -187,6 +189,7 @@ public class PlayScene extends Scene {
 		Gson gson = new GsonBuilder().setPrettyPrinting()
 				.registerTypeAdapter(Component.class, new ComponentDeserializer())
 				.registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
+				.enableComplexMapKeySerialization()
 				.create();
 		String inFile = "";
 		try {
@@ -199,32 +202,27 @@ public class PlayScene extends Scene {
 			for (int i = 0; i < Objects.length; i++) {
 				StateMachine stateMachine = Objects[i].getComponent(StateMachine.class);
 				if (stateMachine != null) {
-					// TODO: bug fixing
-					String file_path = stateMachine.states.get(0).file_path;
-					Spritesheet spritesheet = AssetPool.getSpritesheet(file_path);
-					Objects[i].removeComponent(StateMachine.class);
-					StateMachine newStateMachine = new StateMachine();
-					AnimationState state = new AnimationState();
-					for (int j = 0; j < spritesheet.sprites.size(); j++) {
-						state.addFrame(spritesheet.getSprite(j), Const.DEFAULT_FRAME_TIME);
+					for (AnimationState state : stateMachine.states) {
+						Spritesheet spritesheet = AssetPool.getSpritesheet(state.file_path);
+						state.frames.clear();
+						for (Sprite sprite : spritesheet.sprites) {
+							state.addFrame(sprite.copy(), Const.DEFAULT_FRAME_TIME);
+						}
 					}
-					newStateMachine.addState(state);
-					Objects[i].addComponent(newStateMachine);
-				}
-				
-				Sprite sprite = Objects[i].getComponent(Sprite.class);
-				if (sprite != null && sprite.isSubImage) {
-					String file_path = sprite.file_path;
-					int index = sprite.index;
-					Spritesheet spritesheet = AssetPool.getSpritesheet(file_path);
-					sprite = spritesheet.getSprite(index).copy();
-					// remove old Sprite which does not have image
-					Objects[i].removeComponent(Sprite.class);
-					if (sprite != null) {
-						Objects[i].addComponent(sprite);
+				} else {
+					Sprite sprite = Objects[i].getComponent(Sprite.class);
+					if (sprite != null && sprite.isSubImage) {
+						String file_path = sprite.file_path;
+						int index = sprite.index;
+						Spritesheet spritesheet = AssetPool.getSpritesheet(file_path);
+						sprite = spritesheet.getSprite(index).copy();
+						// remove old Sprite which does not have image
+						Objects[i].removeComponent(Sprite.class);
+						if (sprite != null) {
+							Objects[i].addComponent(sprite);
+						}
 					}
 				}
-				
 				if (Objects[i].objectType == Type.ZOMBIE) {
 					this.addZombie(Objects[i]);
 				} else if (Objects[i].objectType == Type.PLANT) {
@@ -240,10 +238,6 @@ public class PlayScene extends Scene {
 	@Override
 	public void addZombie(GameObject zombie) {
 		Bounds bounds = zombie.getComponent(Bounds.class);
-		if (bounds == null) {
-			System.out.println("Forgot to add Bounds to zombie!");
-			//return;
-		}
 		int line = zombie.line;
 		switch (line) {
 			case 1:
@@ -275,11 +269,6 @@ public class PlayScene extends Scene {
 		if (plant.transform.position.x + Const.PLANT_WIDTH < 60 || plant.transform.position.x > Const.SCREEN_WIDTH ||
 		plant.transform.position.y + Const.PLANT_HEIGHT < 70 || plant.transform.position.y > Const.SCREEN_HEIGHT) {
 			return;
-		}
-		Bounds bounds = plant.getComponent(Bounds.class);
-		if (bounds == null) {
-			System.out.println("Forgot to add Bounds to plant!");
-			//return;
 		}
 		this.plants.get(plant.line).add(plant);
 		if (this.isRunning) plant.start();

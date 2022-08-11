@@ -56,16 +56,9 @@ public class StateMachine extends Component {
 	
 	public void trigger(String trigger) {
 		for (StateTrigger state : this.stateTransfers.keySet()) {
-			if (state.state.equals(currentState.title) && state.trigger.equals(trigger)) {
+			if (state.state.equals(this.currentState.title) && state.trigger.equals(trigger)) {
 				if (this.stateTransfers.get(state) != null) {
-					int newStateIndex = -1, index = 0;
-					for (AnimationState a : this.states) {
-						if (a.title.equals(this.stateTransfers.get(state))) {
-							newStateIndex = index;
-							break;
-						}
-						index++;
-					}
+					int newStateIndex = stateIndexOf(this.stateTransfers.get(state));
 					if (newStateIndex > -1) {
 						this.currentState = this.states.get(newStateIndex);
 					}
@@ -73,7 +66,19 @@ public class StateMachine extends Component {
 				return;
 			}
 		}
-		System.out.println("Cannot find Trigger: " + trigger);
+		//System.out.println("Cannot find Trigger: " + trigger);
+	}
+	
+	private int stateIndexOf(String stateTitle) {
+		int index = 0;
+		for (AnimationState state : states) {
+			if (state.title.equals(stateTitle)) {
+				return index;
+			}
+			index++;
+		}
+		
+		return -1;
 	}
 	
 	@Override

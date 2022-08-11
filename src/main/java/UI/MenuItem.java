@@ -12,7 +12,8 @@ import java.awt.event.MouseEvent;
 
 public class MenuItem extends Component {
 	public Sprite lightSprite, darkSprite;
-	public Spritesheet itemSpritesheet = null;
+	public Spritesheet itemSpritesheet1 = null;
+	public Spritesheet itemSpritesheet2 = null;
 	private int x, y , width, height;
 	public boolean isSelected;
 	
@@ -51,7 +52,7 @@ public class MenuItem extends Component {
 					newObject.addComponent(sprite);
 					scene.mouseCursor = newObject;
 					*/
-					GameObject newObject = Prefabs.generatePlant(this.itemSpritesheet);
+					GameObject newObject = Prefabs.generatePeashooter(this.itemSpritesheet1, this.itemSpritesheet2);
 					PlayScene scene = (PlayScene) Window.getScene();
 					scene.mouseControl.pickUpObject(newObject);
 					this.isSelected = true;

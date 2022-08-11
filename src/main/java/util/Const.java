@@ -42,6 +42,6 @@ public class Const {
 	public static final int GROUND_ZINDEX = -5;
 	public static final int CONTAINER_ZINDEX = 3;
 	
-	public static final float DEFAULT_FRAME_TIME = 0.18f;
+	public static final float DEFAULT_FRAME_TIME = 0.16f;
 	
 }
