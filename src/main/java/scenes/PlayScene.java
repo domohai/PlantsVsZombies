@@ -23,9 +23,12 @@ public class PlayScene extends Scene {
 	public GameObject test = null;
 	public MouseControl mouseControl = null;
 	public GameObject mainContainer = null;
+	private GameObject updateObject = null, nearestPlant = null;
+	private boolean triggerState = false;
 	
 	public PlayScene(String name) {
 		super(name);
+		this.objectsToRemove = new ArrayList<>();
 		this.plants = new HashMap<>();
 		this.zombies = new HashMap<>();
 		for (Integer i = 1; i < 6; i++) {
@@ -54,9 +57,8 @@ public class PlayScene extends Scene {
 	public void init() {
 		this.mouseControl = new MouseControl();
 		this.mainContainer = new GameObject("Container", Const.CONTAINER_ZINDEX);
-		MainContainer container = new MainContainer();
 		this.mainContainer.transform = new Transform(new Vector2D(50.0f, 0.0f), new Vector2D());
-		this.mainContainer.addComponent(container);
+		this.mainContainer.addComponent(new MainContainer());
 		this.mainContainer.start();
 		this.renderer.submit(this.mainContainer);
 		
@@ -65,7 +67,7 @@ public class PlayScene extends Scene {
 				Const.GROUND_ZINDEX, Type.OTHER, 0);
 		ground.addComponent(new Ground(AssetPool.getSpritesheet("assets/bg1.jpg")));
 		// the ground will not change position or something so just draw it
-		renderer.submit(ground);
+		this.renderer.submit(ground);
 		
 		if (this.dataLoaded) return;
 		
@@ -92,56 +94,67 @@ public class PlayScene extends Scene {
 	@Override
 	public void update(double dt) {
 		// get the nearest plant and check collision with all zombies on the same line
-		GameObject updateObject, nearestPlant;
 		for (int i = 1; i < 6; i++) {
 			if (this.plants.get(i).size() > 0) {
-				nearestPlant = this.plants.get(i).get(0);
+				this.nearestPlant = this.plants.get(i).get(0);
 				for (int j = 0; j < this.plants.get(i).size(); j++) {
-					updateObject = this.plants.get(i).get(j);
-					updateObject.update(dt);
-					if (updateObject.isDead) {
-						this.plants.get(i).remove(j);
-						this.renderer.destroy(updateObject);
-						j--;
-					} else if (updateObject.transform.position.x > nearestPlant.transform.position.x) {
-						nearestPlant = updateObject;
+					this.updateObject = this.plants.get(i).get(j);
+					this.updateObject.update(dt);
+					if (this.zombies.get(i).size() > 0) {
+						this.updateObject.getComponent(StateMachine.class).trigger("shoot");
+					} else {
+						this.updateObject.getComponent(StateMachine.class).trigger("stopShooting");
+					}
+					if (this.updateObject.transform.position.x > this.nearestPlant.transform.position.x) {
+						this.nearestPlant = this.updateObject;
+					}
+					if (this.updateObject.isDead) {
+						this.objectsToRemove.add(this.updateObject);
 					}
 				}
 				if (this.zombies.get(i).size() > 0) {
 					for (GameObject g : this.zombies.get(i)) {
-						if (Bounds.checkCollision(nearestPlant.getComponent(Bounds.class), g.getComponent(Bounds.class))) {
-							g.getComponent(Movement.class).setVelocity(new Vector2D());
-							g.getComponent(StateMachine.class).trigger("attack");
+						if (Bounds.checkCollision(this.nearestPlant.getComponent(Bounds.class), g.getComponent(Bounds.class))) {
+							Bounds.resolveCollision(this.nearestPlant, g);
+						} else {
+							this.updateObject.getComponent(StateMachine.class).trigger("walk");
+							this.updateObject.getComponent(Movement.class).setVelocity(Const.ZOMBIE_SPEED, 0.0f);
 						}
 					}
 				}
 			}
 			if (this.zombies.get(i).size() > 0) {
 				for (int j = 0; j < this.zombies.get(i).size(); j++) {
-					updateObject = this.zombies.get(i).get(j);
-					updateObject.update(dt);
-					if (updateObject.isDead) {
-						this.zombies.get(i).remove(j);
-						this.renderer.destroy(updateObject);
-						j--;
+					this.updateObject = this.zombies.get(i).get(j);
+					this.updateObject.update(dt);
+					if (this.plants.get(i).size() == 0) {
+						this.updateObject.getComponent(StateMachine.class).trigger("walk");
+						this.updateObject.getComponent(Movement.class).setVelocity(Const.ZOMBIE_SPEED, 0.0f);
+					}
+					if (this.updateObject.isDead) {
+						this.objectsToRemove.add(this.updateObject);
 					}
 				}
 			}
 		}
 		if (this.gameObjects.size() > 0) {
 			for (int i = 0; i < this.gameObjects.size(); i++) {
-				updateObject = this.gameObjects.get(i);
-				updateObject.update(dt);
-				if (updateObject.isDead) {
-					this.gameObjects.remove(i);
-					this.renderer.destroy(updateObject);
-					i--;
+				this.updateObject = this.gameObjects.get(i);
+				this.updateObject.update(dt);
+				if (this.updateObject.isDead) {
+					this.objectsToRemove.add(this.updateObject);
 				}
 			}
 		}
-		
 		this.mouseControl.update(dt);
 		this.mainContainer.update(dt);
+		
+		if (this.objectsToRemove.size() > 0) {
+			for (GameObject g : this.objectsToRemove) {
+				this.remove(g);
+			}
+			this.objectsToRemove.clear();
+		}
 		// press Enter to save game
 		if (KeyListener.get().is_keyPressed(KeyEvent.VK_ENTER)) {
 			this.save();
@@ -152,6 +165,18 @@ public class PlayScene extends Scene {
 	public void draw(Graphics2D g2D) {
 		this.renderer.render(g2D);
 		this.mouseControl.draw(g2D);
+	}
+	
+	@Override
+	public void remove(GameObject object) {
+		if (object.objectType == Type.PLANT) {
+			this.plants.get(object.line).remove(object);
+		} else if (object.objectType == Type.ZOMBIE) {
+			this.zombies.get(object.line).remove(object);
+		} else {
+			this.gameObjects.remove(object);
+		}
+		this.renderer.destroy(object);
 	}
 	
 	@Override
@@ -174,7 +199,6 @@ public class PlayScene extends Scene {
 				saveList.add(this.zombies.get(i).get(j));
 			}
 		}
-		
 		try {
 			FileWriter writer = new FileWriter("data.txt");
 			writer.write(gson.toJson(saveList));

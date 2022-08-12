@@ -49,13 +49,6 @@ public class GameObject {
 		}
 	}
 	
-	public void destroy() {
-		this.isDead = true;
-		for (int i = 0; i < this.components.size(); i++) {
-			this.components.get(i).destroy();
-		}
-	}
-	
 	public void addComponent(Component newComponent) {
 		this.components.add(newComponent);
 		newComponent.gameObject = this;

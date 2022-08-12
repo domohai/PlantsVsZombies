@@ -36,10 +36,6 @@ public class MouseControl extends Component {
 	@Override
 	public void update(double dt) {
 		if (this.holdingObject != null) {
-			/*
-			this.holdingObject.transform.position.x = MouseListener.getX() - 20;
-			this.holdingObject.transform.position.y = MouseListener.getY() - 20;
-			*/
 			this.stateMachine = this.holdingObject.getComponent(StateMachine.class);
 			this.sprite = stateMachine.currentState.getCurrentSprite();
 			if (MouseListener.getX() > Const.YARD_X && MouseListener.getX() <= (Const.YARD_X + Const.YARD_WIDTH)
@@ -76,8 +72,8 @@ public class MouseControl extends Component {
 	@Override
 	public void draw(Graphics2D g2D) {
 		if (this.holdingObject != null) {
-			this.stateMachine = this.holdingObject.getComponent(StateMachine.class);
-			this.sprite = stateMachine.currentState.getCurrentSprite();
+			//this.stateMachine = this.holdingObject.getComponent(StateMachine.class);
+			//this.sprite = stateMachine.currentState.getCurrentSprite();
 			if (this.sprite != null) {
 				g2D.drawImage(this.sprite.image, (int)this.holdingObject.transform.position.x,
 						(int)this.holdingObject.transform.position.y,

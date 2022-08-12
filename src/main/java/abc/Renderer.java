@@ -1,4 +1,6 @@
 package abc;
+import util.Const;
+
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,8 +14,8 @@ public class Renderer {
 	private int currentValue;
 	public Renderer() {
 		this.gameObjects = new HashMap<>();
-		this.minValue = Integer.MAX_VALUE;
-		this.maxValue = Integer.MIN_VALUE;
+		this.minValue = Const.MIN_ZINDEX;
+		this.maxValue = Const.MAX_ZINDEX;
 		this.currentValue = 0;
 	}
 	
@@ -23,10 +25,11 @@ public class Renderer {
 	}
 	
 	public void destroy(GameObject object) {
-		// TODO: add destroy GameObject here
+		this.gameObjects.get(object.zIndex).remove(object);
 	}
 	
 	public void render(Graphics2D g2D) {
+		/*
 		// loop through keySet to get max and min zIndex
 		this.minValue = Integer.MAX_VALUE;
 		this.maxValue = Integer.MIN_VALUE;
@@ -34,17 +37,18 @@ public class Renderer {
 			if (minValue > i) minValue = i;
 			if (maxValue < i) maxValue = i;
 		}
+		*/
 		// draw each gameObject base on its zIndex
-		this.currentValue = minValue;
-		while (currentValue <= maxValue) {
-			if (this.gameObjects.get(currentValue) == null) {
-				currentValue++;
+		this.currentValue = this.minValue;
+		while (this.currentValue <= this.maxValue) {
+			if (this.gameObjects.get(this.currentValue) == null) {
+				this.currentValue++;
 				continue;
 			}
-			for (GameObject g : this.gameObjects.get(currentValue)) {
+			for (GameObject g : this.gameObjects.get(this.currentValue)) {
 				g.draw(g2D);
 			}
-			currentValue++;
+			this.currentValue++;
 		}
 	}
 }

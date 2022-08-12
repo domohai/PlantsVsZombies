@@ -10,5 +10,4 @@ public abstract class Component {
 	public void draw(Graphics2D g2D) {}
 	public abstract Component copy();
 	
-	public void destroy() {}
 }

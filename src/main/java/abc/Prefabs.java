@@ -65,6 +65,7 @@ public class Prefabs {
 		attackState.setLoop(true);
 		stateMachine.addState(walkState);
 		stateMachine.addState(attackState);
+		stateMachine.addStateTrigger(attackState.title, walkState.title, "walk");
 		stateMachine.addStateTrigger(walkState.title, attackState.title, "attack");
 		stateMachine.setDefaultState(walkState.title);
 		newZombie.addComponent(stateMachine);

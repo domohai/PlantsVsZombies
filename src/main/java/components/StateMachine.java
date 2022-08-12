@@ -77,7 +77,6 @@ public class StateMachine extends Component {
 			}
 			index++;
 		}
-		
 		return -1;
 	}
 	

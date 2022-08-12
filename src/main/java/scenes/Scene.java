@@ -9,7 +9,7 @@ import java.util.Map;
 public abstract class Scene {
 	private String name;
 	protected boolean isRunning = false;
-	protected List<GameObject> gameObjects;
+	protected List<GameObject> gameObjects, objectsToRemove = null;
 	protected Map<Integer, List<GameObject>> plants = null;
 	protected Map<Integer, List<GameObject>> zombies = null;
 	protected Renderer renderer;
@@ -35,6 +35,8 @@ public abstract class Scene {
 		this.renderer.submit(newGameObject);
 		if (this.isRunning) newGameObject.start();
 	}
+	
+	public void remove(GameObject object) {}
 	
 	public abstract void update(double dt);
 	public abstract void draw(Graphics2D g2D);

@@ -12,8 +12,9 @@ public class Movement extends Component {
 		this.velocity = velocity;
 	}
 	
-	public void setVelocity(Vector2D velocity) {
-		this.velocity = velocity;
+	public void setVelocity(float x, float y) {
+		this.velocity.x = x;
+		this.velocity.y = y;
 	}
 	
 	@Override

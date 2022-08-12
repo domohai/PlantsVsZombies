@@ -1,5 +1,6 @@
 package components;
 
+import abc.GameObject;
 import util.Vector2D;
 
 public class Bounds extends Component {
@@ -41,18 +42,24 @@ public class Bounds extends Component {
 	}
 	
 	public static boolean checkCollision(Bounds b1, Bounds b2) {
-		b1.calculateCenter();
-		b2.calculateCenter();
-		float dx = b2.center.x - b1.center.x;
-		float combineHalfW = b1.halfW + b2.halfW - 18;
-		if (Math.abs(dx) <= combineHalfW) {
-			return true;
+		if (b1 != null && b2 != null) {
+			b1.calculateCenter();
+			b2.calculateCenter();
+			float dx = b2.center.x - b1.center.x;
+			float combineHalfW = b1.halfW + b2.halfW - 20;
+			if (Math.abs(dx) <= combineHalfW) {
+				return true;
+			}
 		}
 		return false;
 	}
 	
-	public static void resolveCollision() {
-	
+	public static void resolveCollision(GameObject plant, GameObject zombie) {
+		zombie.getComponent(StateMachine.class).trigger("attack");
+		zombie.getComponent(Movement.class).setVelocity(0.0f, 0.0f);
+		plant.getComponent(Rigidbody.class).hit = true;
+		plant.getComponent(Rigidbody.class).setDamage(100);
+		
 	}
 	
 	@Override
