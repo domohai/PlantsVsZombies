@@ -1,0 +1,664 @@
+[
+  {
+    "name": "newPlant",
+    "components": [
+      {
+        "type": "components.Bounds",
+        "properties": {
+          "width": 75.0,
+          "height": 90.0,
+          "halfW": 37.5,
+          "halfH": 45.0,
+          "center": {
+            "x": 97.5,
+            "y": 322.0
+          }
+        }
+      },
+      {
+        "type": "components.Rigidbody",
+        "properties": {
+          "HP": 100,
+          "damage": 0,
+          "hit": false
+        }
+      },
+      {
+        "type": "components.Shoot",
+        "properties": {
+          "isShooting": true,
+          "flySpritesheet": {
+            "sprites": [
+              {
+                "width": 28,
+                "height": 28,
+                "index": 0,
+                "file_path": "assets/bullet/ProjectilePea.png",
+                "isSubImage": true
+              }
+            ],
+            "tileW": 28,
+            "tileH": 28,
+            "file_path": "assets/bullet/ProjectilePea.png"
+          },
+          "explode": {
+            "sprites": [
+              {
+                "width": 24,
+                "height": 24,
+                "index": 0,
+                "file_path": "assets/bullet/pea_splats.png",
+                "isSubImage": true
+              },
+              {
+                "width": 24,
+                "height": 24,
+                "index": 1,
+                "file_path": "assets/bullet/pea_splats.png",
+                "isSubImage": true
+              },
+              {
+                "width": 24,
+                "height": 24,
+                "index": 2,
+                "file_path": "assets/bullet/pea_splats.png",
+                "isSubImage": true
+              },
+              {
+                "width": 24,
+                "height": 24,
+                "index": 3,
+                "file_path": "assets/bullet/pea_splats.png",
+                "isSubImage": true
+              }
+            ],
+            "tileW": 24,
+            "tileH": 24,
+            "file_path": "assets/bullet/pea_splats.png"
+          },
+          "debounceTime": 2.5,
+          "debounceTimeLeft": 1.2943239
+        }
+      },
+      {
+        "type": "components.StateMachine",
+        "properties": {
+          "stateTransfers": [
+            [
+              {
+                "state": "idle",
+                "trigger": "shoot"
+              },
+              "shoot"
+            ],
+            [
+              {
+                "state": "shoot",
+                "trigger": "stopShooting"
+              },
+              "idle"
+            ]
+          ],
+          "states": [
+            {
+              "title": "idle",
+              "file_path": "assets/plants/peashooter_idle.png",
+              "frames": [
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 0,
+                    "file_path": "assets/plants/peashooter_idle.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 1,
+                    "file_path": "assets/plants/peashooter_idle.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 2,
+                    "file_path": "assets/plants/peashooter_idle.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 3,
+                    "file_path": "assets/plants/peashooter_idle.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 4,
+                    "file_path": "assets/plants/peashooter_idle.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 5,
+                    "file_path": "assets/plants/peashooter_idle.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 6,
+                    "file_path": "assets/plants/peashooter_idle.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 7,
+                    "file_path": "assets/plants/peashooter_idle.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                }
+              ],
+              "doesLoop": true
+            },
+            {
+              "title": "shoot",
+              "file_path": "assets/plants/peashooter_shoot.png",
+              "frames": [
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 0,
+                    "file_path": "assets/plants/peashooter_shoot.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 1,
+                    "file_path": "assets/plants/peashooter_shoot.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 2,
+                    "file_path": "assets/plants/peashooter_shoot.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 3,
+                    "file_path": "assets/plants/peashooter_shoot.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 4,
+                    "file_path": "assets/plants/peashooter_shoot.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 5,
+                    "file_path": "assets/plants/peashooter_shoot.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 6,
+                    "file_path": "assets/plants/peashooter_shoot.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 7,
+                    "file_path": "assets/plants/peashooter_shoot.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 8,
+                    "file_path": "assets/plants/peashooter_shoot.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 9,
+                    "file_path": "assets/plants/peashooter_shoot.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 10,
+                    "file_path": "assets/plants/peashooter_shoot.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 11,
+                    "file_path": "assets/plants/peashooter_shoot.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 75,
+                    "height": 90,
+                    "index": 12,
+                    "file_path": "assets/plants/peashooter_shoot.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                }
+              ],
+              "doesLoop": true
+            }
+          ],
+          "defaultStateTitle": "idle"
+        }
+      }
+    ],
+    "isDead": false,
+    "transform": {
+      "position": {
+        "x": 60.0,
+        "y": 277.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "zIndex": 0,
+    "line": 3,
+    "objectType": "PLANT"
+  },
+  {
+    "name": "new Zombie",
+    "components": [
+      {
+        "type": "components.Movement",
+        "properties": {
+          "velocity": {
+            "x": -50.0,
+            "y": 0.0
+          }
+        }
+      },
+      {
+        "type": "components.Bounds",
+        "properties": {
+          "width": 85.0,
+          "height": 142.0,
+          "halfW": 42.5,
+          "halfH": 71.0,
+          "center": {
+            "x": 612.5198,
+            "y": 306.0
+          }
+        }
+      },
+      {
+        "type": "components.Rigidbody",
+        "properties": {
+          "HP": 100,
+          "damage": 0,
+          "hit": false
+        }
+      },
+      {
+        "type": "components.StateMachine",
+        "properties": {
+          "stateTransfers": [
+            [
+              {
+                "state": "walk",
+                "trigger": "attack"
+              },
+              "attack"
+            ],
+            [
+              {
+                "state": "attack",
+                "trigger": "walk"
+              },
+              "walk"
+            ]
+          ],
+          "states": [
+            {
+              "title": "walk",
+              "file_path": "assets/zombies/zombie_move.png",
+              "frames": [
+                {
+                  "sprite": {
+                    "width": 85,
+                    "height": 142,
+                    "index": 0,
+                    "file_path": "assets/zombies/zombie_move.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 85,
+                    "height": 142,
+                    "index": 1,
+                    "file_path": "assets/zombies/zombie_move.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 85,
+                    "height": 142,
+                    "index": 2,
+                    "file_path": "assets/zombies/zombie_move.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 85,
+                    "height": 142,
+                    "index": 3,
+                    "file_path": "assets/zombies/zombie_move.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 85,
+                    "height": 142,
+                    "index": 4,
+                    "file_path": "assets/zombies/zombie_move.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 85,
+                    "height": 142,
+                    "index": 5,
+                    "file_path": "assets/zombies/zombie_move.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 85,
+                    "height": 142,
+                    "index": 6,
+                    "file_path": "assets/zombies/zombie_move.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 85,
+                    "height": 142,
+                    "index": 7,
+                    "file_path": "assets/zombies/zombie_move.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 85,
+                    "height": 142,
+                    "index": 8,
+                    "file_path": "assets/zombies/zombie_move.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 85,
+                    "height": 142,
+                    "index": 9,
+                    "file_path": "assets/zombies/zombie_move.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 85,
+                    "height": 142,
+                    "index": 10,
+                    "file_path": "assets/zombies/zombie_move.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 85,
+                    "height": 142,
+                    "index": 11,
+                    "file_path": "assets/zombies/zombie_move.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 85,
+                    "height": 142,
+                    "index": 12,
+                    "file_path": "assets/zombies/zombie_move.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 85,
+                    "height": 142,
+                    "index": 13,
+                    "file_path": "assets/zombies/zombie_move.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                }
+              ],
+              "doesLoop": true
+            },
+            {
+              "title": "attack",
+              "file_path": "assets/zombies/zomattack.png",
+              "frames": [
+                {
+                  "sprite": {
+                    "width": 95,
+                    "height": 142,
+                    "index": 0,
+                    "file_path": "assets/zombies/zomattack.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 95,
+                    "height": 142,
+                    "index": 1,
+                    "file_path": "assets/zombies/zomattack.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 95,
+                    "height": 142,
+                    "index": 2,
+                    "file_path": "assets/zombies/zomattack.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 95,
+                    "height": 142,
+                    "index": 3,
+                    "file_path": "assets/zombies/zomattack.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 95,
+                    "height": 142,
+                    "index": 4,
+                    "file_path": "assets/zombies/zomattack.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 95,
+                    "height": 142,
+                    "index": 5,
+                    "file_path": "assets/zombies/zomattack.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 95,
+                    "height": 142,
+                    "index": 6,
+                    "file_path": "assets/zombies/zomattack.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 95,
+                    "height": 142,
+                    "index": 7,
+                    "file_path": "assets/zombies/zomattack.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                },
+                {
+                  "sprite": {
+                    "width": 95,
+                    "height": 142,
+                    "index": 8,
+                    "file_path": "assets/zombies/zomattack.png",
+                    "isSubImage": true
+                  },
+                  "frameTime": 0.16
+                }
+              ],
+              "doesLoop": true
+            }
+          ],
+          "defaultStateTitle": "walk"
+        }
+      }
+    ],
+    "isDead": false,
+    "transform": {
+      "position": {
+        "x": 570.0198,
+        "y": 235.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "zIndex": 2,
+    "line": 3,
+    "objectType": "ZOMBIE"
+  }
+]

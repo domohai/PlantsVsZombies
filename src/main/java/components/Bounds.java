@@ -1,6 +1,7 @@
 package components;
 
 import abc.GameObject;
+import util.Const;
 import util.Vector2D;
 
 public class Bounds extends Component {
@@ -58,7 +59,7 @@ public class Bounds extends Component {
 		zombie.getComponent(StateMachine.class).trigger("attack");
 		zombie.getComponent(Movement.class).setVelocity(0.0f, 0.0f);
 		plant.getComponent(Rigidbody.class).hit = true;
-		plant.getComponent(Rigidbody.class).setDamage(100);
+		plant.getComponent(Rigidbody.class).setDamage(Const.ZOMBIE_DAMAGE);
 		
 	}
 	

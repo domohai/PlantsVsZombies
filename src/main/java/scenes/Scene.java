@@ -12,6 +12,7 @@ public abstract class Scene {
 	protected List<GameObject> gameObjects, objectsToRemove = null;
 	protected Map<Integer, List<GameObject>> plants = null;
 	protected Map<Integer, List<GameObject>> zombies = null;
+	protected Map<Integer, List<GameObject>> bullets = null;
 	protected Renderer renderer;
 	protected boolean dataLoaded = false;
 	
@@ -48,4 +49,5 @@ public abstract class Scene {
 	
 	public void addZombie(GameObject zombie) {}
 	public void addPlant(GameObject plant) {}
+	public void addBullet(GameObject bullet) {}
 }

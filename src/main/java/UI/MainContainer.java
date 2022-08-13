@@ -23,11 +23,11 @@ public class MainContainer extends Component {
 	
 	public void init() {
 		Spritesheet buttonSprites = AssetPool.getSpritesheet("assets/ui/seedrow.png");
-		Spritesheet itemSprites = AssetPool.getSpritesheet("assets/plants/sunflower.png");
-		Spritesheet itemSprites1 = AssetPool.getSpritesheet("assets/plants/peashooter_idle.png");
-		Spritesheet itemSprites2 = AssetPool.getSpritesheet("assets/plants/peashooter_shoot.png");
-		Spritesheet itemSprites3 = AssetPool.getSpritesheet("assets/plants/snowpeashooter_idle.png");
-		Spritesheet itemSprites4 = AssetPool.getSpritesheet("assets/plants/snowpeashooter_shoot.png");
+		Spritesheet sunFlower = AssetPool.getSpritesheet("assets/plants/sunflower.png");
+		Spritesheet peashooter_idle = AssetPool.getSpritesheet("assets/plants/peashooter_idle.png");
+		Spritesheet peashooter_shoot = AssetPool.getSpritesheet("assets/plants/peashooter_shoot.png");
+		Spritesheet snowpeashooter_idle = AssetPool.getSpritesheet("assets/plants/snowpeashooter_idle.png");
+		Spritesheet snowpeashooter_shoot = AssetPool.getSpritesheet("assets/plants/snowpeashooter_shoot.png");
 		
 		int col = 0;
 		for (int i = 0; i < buttonSprites.sprites.size(); i++) {
@@ -40,15 +40,25 @@ public class MainContainer extends Component {
 			GameObject newObject = new GameObject("Item", Const.CONTAINER_ZINDEX);
 			newObject.transform = transform;
 			newObject.addComponent(currentSprite.copy());
-			MenuItem menuItem = new MenuItem(x, y, Const.BUTTON_WIDTH, Const.BUTTON_HEIGHT, currentSprite, null);
-			if (col == 0) {
-				menuItem.itemSpritesheet1 = itemSprites;
-			} else if (col == 1) {
-				menuItem.itemSpritesheet1 = itemSprites1;
-				menuItem.itemSpritesheet2 = itemSprites2;
-			} else if (col == 2) {
-				menuItem.itemSpritesheet1 = itemSprites3;
-				menuItem.itemSpritesheet2 = itemSprites4;
+			MenuItem menuItem = null;
+			switch (col) {
+				case 0:
+					menuItem = new MenuItem(x, y, Const.BUTTON_WIDTH, Const.BUTTON_HEIGHT, currentSprite, null, PlantType.SUNFLOWER);
+					menuItem.itemSpritesheet1 = sunFlower;
+					break;
+				case 1:
+					menuItem = new MenuItem(x, y, Const.BUTTON_WIDTH, Const.BUTTON_HEIGHT, currentSprite, null, PlantType.PEASHOOTER);
+					menuItem.itemSpritesheet1 = peashooter_idle;
+					menuItem.itemSpritesheet2 = peashooter_shoot;
+					break;
+				case 2:
+					menuItem = new MenuItem(x, y, Const.BUTTON_WIDTH, Const.BUTTON_HEIGHT, currentSprite, null, PlantType.SNOWPEASHOOTER);
+					menuItem.itemSpritesheet1 = snowpeashooter_idle;
+					menuItem.itemSpritesheet2 = snowpeashooter_shoot;
+					break;
+				default:
+					System.out.println("Unknown plant in MainContainer init!");
+					break;
 			}
 			newObject.addComponent(menuItem);
 			menuItems.add(newObject);

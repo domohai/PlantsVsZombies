@@ -19,7 +19,7 @@ public class Movement extends Component {
 	
 	@Override
 	public void update(double dt) {
-		this.gameObject.transform.position.x -= this.velocity.x * dt;
+		this.gameObject.transform.position.x += this.velocity.x * dt;
 	}
 	
 	@Override

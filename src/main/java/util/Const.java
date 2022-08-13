@@ -7,14 +7,14 @@ public class Const {
 	
 	public static final int ZOMBIE_HEIGHT = 142;
 	public static final int ZOMBIE_WIDTH = 85;
-	public static final int ZOMBIE_SPEED = 50;
+	public static final int ZOMBIE_SPEED = -50;
 	public static final int ZOMBIE_HP = 100;
-	
-	public static final int BULLET_SPEED = 0;
+	public static final int ZOMBIE_DAMAGE = 20;
 	
 	public static final int PLANT_WIDTH = 75;
 	public static final int PLANT_HEIGHT = 90;
 	public static final int PLANT_HP = 100;
+	public static final int BULLET_SPEED = 150;
 	
 	public static final int YARD_X = 60;
 	public static final int YARD_WIDTH = 740;
@@ -36,11 +36,14 @@ public class Const {
 	public static final int CONTAINER_OFFSET_Y = 115;
 	public static final int TOOLBAR_TOP = 30;
 	
-	public static final int ZOMBIE_ZINDEX = 4;
-	public static final int PLANT_ZINDEX = 2;
+	public static final int ZOMBIE_ZINDEX = 2;
+	public static final int PLANT_ZINDEX = 0;
+	public static final int BULLET_ZINDEX = 3;
+	public static final int SUN_ZINDEX = 4;
 	public static final int MOUSE_ZINDEX = 5;
+	public static final int CONTAINER_ZINDEX = 1;
+	
 	public static final int GROUND_ZINDEX = -5;
-	public static final int CONTAINER_ZINDEX = 3;
 	public static final int MIN_ZINDEX = -5;
 	public static final int MAX_ZINDEX = 5;
 	
