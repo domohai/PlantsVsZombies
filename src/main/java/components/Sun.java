@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 
 public class Sun extends Component {
 	public transient int OFFSET_Y = Const.CONTAINER_OFFSET_Y - Const.TOOLBAR_TOP;
+	public boolean applyGravity = true;
 	
 	@Override
 	public void update(double dt) {
@@ -22,7 +23,9 @@ public class Sun extends Component {
 		} else if (this.gameObject.transform.position.y > Const.SCREEN_HEIGHT) {
 			this.gameObject.isDead = true;
 		}
-		this.gameObject.transform.position.y += Const.GRAVITY * dt;
+		if (this.applyGravity) {
+			this.gameObject.transform.position.y += Const.GRAVITY * dt;
+		}
 	}
 	
 	@Override

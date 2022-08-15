@@ -11,7 +11,7 @@ public class Prefabs {
 		newObject.addComponent(sprite.copy());
 		return newObject;
 	}
-	public static GameObject generatePeashooter(Spritesheet idleSpritesheet, Spritesheet shootSpritesheet) {
+	public static GameObject generatePeaShooter(Spritesheet idleSpritesheet, Spritesheet shootSpritesheet) {
 		GameObject newPlant = new GameObject("newPlant", new Transform(new Vector2D(), new Vector2D()), Const.MOUSE_ZINDEX, Type.PLANT, 1);
 		newPlant.addComponent(new Bounds(Const.PLANT_WIDTH, Const.PLANT_HEIGHT));
 		newPlant.addComponent(new Rigidbody(Const.PLANT_HP));
@@ -38,10 +38,11 @@ public class Prefabs {
 		return newPlant;
 	}
 	
-	public static GameObject generatePeashooter(Spritesheet spritesheet) {
+	public static GameObject generateSunFlower(Spritesheet spritesheet) {
 		GameObject newPlant = new GameObject("newPlant", new Transform(new Vector2D(), new Vector2D()), Const.MOUSE_ZINDEX, Type.PLANT, 1);
 		newPlant.addComponent(new Bounds(Const.PLANT_WIDTH, Const.PLANT_HEIGHT));
 		newPlant.addComponent(new Rigidbody(Const.PLANT_HP));
+		newPlant.addComponent(new SunFlower());
 		StateMachine stateMachine = new StateMachine();
 		AnimationState idleState = new AnimationState(spritesheet.file_path);
 		idleState.title = "idle";

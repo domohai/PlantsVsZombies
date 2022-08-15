@@ -24,11 +24,9 @@ public class PlayScene extends Scene {
 	public MouseControl mouseControl;
 	public GameObject mainContainer = null, Bank;
 	private GameObject nearestPlant = null, nearestZombie = null, nearestBullet = null;
-	private SpawnMachine spawnMachine;
 	
 	public PlayScene(String name) {
 		super(name);
-		this.spawnMachine = new SpawnMachine();
 		this.mouseControl = new MouseControl();
 		this.objectsToRemove = new ArrayList<>();
 		this.plants = new HashMap<>();
@@ -64,7 +62,11 @@ public class PlayScene extends Scene {
 		this.mainContainer.addComponent(new MainContainer());
 		this.mainContainer.start();
 		this.renderer.submit(this.mainContainer);
-		this.spawnMachine.spawnSun();
+		
+		TimerMachine.sunTimer.scheduleAtFixedRate(TimerMachine.sunTimerTask, 2000, 8000);
+		TimerMachine.zombieTimerPeriodOne.scheduleAtFixedRate(TimerMachine.zombieTimerTask, 30000, 15000);
+		TimerMachine.zombieTimerPeriodTwo.scheduleAtFixedRate(TimerMachine.zombieTimerTask, 60000, 15000);
+		
 		// add ground
 		GameObject ground = new GameObject("Background", new Transform(new Vector2D(-200.0f, 0.0f), new Vector2D()),
 				Const.GROUND_ZINDEX, Type.OTHER, 0);
@@ -75,12 +77,8 @@ public class PlayScene extends Scene {
 		if (this.dataLoaded) return;
 		
 		this.Bank = new GameObject("SunBank", Const.CONTAINER_ZINDEX);
-		this.Bank.addComponent(new SunBank());
+		this.Bank.addComponent(new SunBank(50));
 		this.addGameObject(this.Bank);
-		
-		test = Prefabs.generateZombie(AssetPool.getSpritesheet("assets/zombies/zombie_move.png"),
-				AssetPool.getSpritesheet("assets/zombies/zomattack.png"));
-		this.addZombie(test);
 		
 	}
 	

@@ -37,6 +37,10 @@ public abstract class Scene {
 		if (this.isRunning) newGameObject.start();
 	}
 	
+	public List<GameObject> getPlantInLine(int line) {
+		return this.plants.get(line);
+	}
+	
 	public void remove(GameObject object) {}
 	
 	public abstract void update(double dt);

@@ -5,22 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0e6d5ce-4426-4fec-acf9-cda95d658b86" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/sun/sun.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/sun/sun_small.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/abc/RandomMachine.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/abc/SpawnMachine.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/components/Sun.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/components/SunBank.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/components/Zombie.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/abc/TimerMachine.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/components/SunFlower.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/UI/MainContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UI/MainContainer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/UI/MenuItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UI/MenuItem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/abc/Prefabs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/abc/Prefabs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/components/Bounds.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/components/Bounds.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/abc/SpawnMachine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/abc/SpawnMachine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/components/MouseControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/components/MouseControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/components/Sun.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/components/Sun.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/scenes/PlayScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/scenes/PlayScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/Const.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/Const.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/scenes/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/scenes/Scene.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -53,15 +53,15 @@ public class MenuItem extends Component {
 					GameObject newObject = null;
 					switch (this.type) {
 						case SUNFLOWER:
-							newObject = Prefabs.generatePeashooter(this.itemSpritesheet1);
+							newObject = Prefabs.generateSunFlower(this.itemSpritesheet1);
 							break;
 						case PEASHOOTER:
-							newObject = Prefabs.generatePeashooter(this.itemSpritesheet1, this.itemSpritesheet2);
+							newObject = Prefabs.generatePeaShooter(this.itemSpritesheet1, this.itemSpritesheet2);
 							newObject.getComponent(Shoot.class).flySpritesheet = AssetPool.getSpritesheet("assets/bullet/ProjectilePea.png");
 							newObject.getComponent(Shoot.class).explode = AssetPool.getSpritesheet("assets/bullet/pea_splats.png");
 							break;
 						case SNOWPEASHOOTER:
-							newObject = Prefabs.generatePeashooter(this.itemSpritesheet1, this.itemSpritesheet2);
+							newObject = Prefabs.generatePeaShooter(this.itemSpritesheet1, this.itemSpritesheet2);
 							newObject.getComponent(Shoot.class).flySpritesheet = AssetPool.getSpritesheet("assets/bullet/ProjectileSnowPea.png");
 							newObject.getComponent(Shoot.class).explode = AssetPool.getSpritesheet("assets/bullet/SnowPea_splats.png");
 							break;

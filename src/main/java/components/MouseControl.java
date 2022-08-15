@@ -28,6 +28,12 @@ public class MouseControl extends Component {
 		} else {
 			this.holdingObject.line = 1;
 		}
+		for (GameObject g : Window.getScene().getPlantInLine(this.holdingObject.line)) {
+			if (g.transform.position.x == this.holdingObject.transform.position.x &&
+			g.transform.position.y == this.holdingObject.transform.position.y) {
+				return;
+			}
+		}
 		this.holdingObject.zIndex = Const.PLANT_ZINDEX;
 		Window.getScene().addPlant(this.holdingObject);
 		this.holdingObject = null;
