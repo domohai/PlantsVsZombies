@@ -4,10 +4,8 @@ import abc.GameObject;
 import abc.MouseListener;
 import abc.Prefabs;
 import abc.Window;
+import components.*;
 import components.Component;
-import components.Shoot;
-import components.Sprite;
-import components.Spritesheet;
 import scenes.PlayScene;
 import util.AssetPool;
 
@@ -18,12 +16,13 @@ public class MenuItem extends Component {
 	public Sprite lightSprite, darkSprite;
 	public Spritesheet itemSpritesheet1 = null;
 	public Spritesheet itemSpritesheet2 = null;
-	private int x, y , width, height, actualY, combineW, combineH;
+	private int x, y , width, height, actualY, combineW, combineH, price;
 	public PlantType type;
 	public float debounceTime = 10.0f;
 	public float debounceTimeLeft = 0.0f;
 	
-	public MenuItem(int x, int y, int width, int height, Sprite lightSprite, Sprite darkSprite, PlantType type) {
+	public MenuItem(int x, int y, int width, int height, Sprite lightSprite, Sprite darkSprite,
+					PlantType type, int price) {
 		this.x = x;
 		this.y = y;
 		this.actualY = y + 30;
@@ -34,6 +33,7 @@ public class MenuItem extends Component {
 		this.lightSprite = lightSprite;
 		this.darkSprite = darkSprite;
 		this.type = type;
+		this.price = price;
 	}
 	
 	@Override
@@ -45,9 +45,9 @@ public class MenuItem extends Component {
 	public void update(double dt) {
 		// check if the mouse is within this item
 		this.debounceTimeLeft -= dt;
-		if (this.debounceTimeLeft <= 0.0f) {
+		if (this.debounceTimeLeft <= 0.0f && SunBank.BALANCE >= this.price) {
 			if (MouseListener.getX() > this.x && MouseListener.getX() <= (this.combineW)
-					&& MouseListener.getY() > this.actualY && MouseListener.getY() <= (this.combineH)) {
+				&& MouseListener.getY() > this.actualY && MouseListener.getY() <= (this.combineH)) {
 				// check if player click left button
 				if (MouseListener.mouseButtonDown(MouseEvent.BUTTON1)) {
 					GameObject newObject = null;
@@ -71,6 +71,7 @@ public class MenuItem extends Component {
 					}
 					PlayScene scene = (PlayScene) Window.getScene();
 					scene.mouseControl.pickUpObject(newObject);
+					SunBank.BALANCE -= this.price;
 					this.debounceTimeLeft = this.debounceTime;
 				}
 			}

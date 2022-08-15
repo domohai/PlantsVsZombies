@@ -58,8 +58,7 @@ public class Bounds extends Component {
 	}
 	
 	public static void resolvePlantCollision(GameObject plant, GameObject zombie) {
-		zombie.getComponent(StateMachine.class).trigger("attack");
-		zombie.getComponent(Movement.class).setVelocity(0.0f, 0.0f);
+		zombie.getComponent(Zombie.class).isAttacking = true;
 		plant.getComponent(Rigidbody.class).hit = true;
 		plant.getComponent(Rigidbody.class).setDamage(Const.ZOMBIE_DAMAGE);
 		
@@ -69,14 +68,9 @@ public class Bounds extends Component {
 		zombie.getComponent(Rigidbody.class).hit = true;
 		zombie.getComponent(Rigidbody.class).setDamage(Const.PLANT_DAMAGE);
 		bullet.getComponent(Bullet.class).hitZombie = true;
-		System.out.println(zombie.getComponent(Rigidbody.class).HP);
+		//System.out.println(zombie.getComponent(Rigidbody.class).HP);
 	}
-	/*
-	@Override
-	public void update(double dt) {
 	
-	}
-	*/
 	@Override
 	public Component copy() {
 		Bounds copy = new Bounds();

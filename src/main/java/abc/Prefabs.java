@@ -1,5 +1,7 @@
 package abc;
+
 import components.*;
+import util.AssetPool;
 import util.Const;
 import util.Vector2D;
 
@@ -54,11 +56,12 @@ public class Prefabs {
 	}
 	
 	public static GameObject generateZombie(Spritesheet walk, Spritesheet attack) {
-		GameObject newZombie = new GameObject("new Zombie", new Transform(new Vector2D(850.0f, 0.0f), new Vector2D()),
-				Const.ZOMBIE_ZINDEX, Type.ZOMBIE, 3);
+		GameObject newZombie = new GameObject("new Zombie", new Transform(new Vector2D(820.0f, 0.0f), new Vector2D()),
+				Const.ZOMBIE_ZINDEX, Type.ZOMBIE, RandomMachine.randomInt(1, 5));
 		newZombie.addComponent(new Movement(new Vector2D(Const.ZOMBIE_SPEED, 0.0f)));
 		newZombie.addComponent(new Bounds(Const.ZOMBIE_WIDTH, Const.ZOMBIE_HEIGHT));
 		newZombie.addComponent(new Rigidbody(Const.ZOMBIE_HP));
+		newZombie.addComponent(new Zombie());
 		StateMachine stateMachine = new StateMachine();
 		AnimationState walkState = new AnimationState(walk.file_path);
 		AnimationState attackState = new AnimationState(attack.file_path);
@@ -107,4 +110,21 @@ public class Prefabs {
 		return newBullet;
 	}
 	
+	public static GameObject generateSun() {
+		Spritesheet spritesheet = AssetPool.getSpritesheet("assets/sun/sun_small.png");
+		GameObject newSun = new GameObject("Sun", Const.SUN_ZINDEX);
+		Transform transform = new Transform(new Vector2D((float)((RandomMachine.randomDouble() * Const.SCREEN_WIDTH) - Const.SUN_WIDTH),
+				-40.0f), new Vector2D());
+		newSun.transform = transform;
+		newSun.addComponent(new Sun());
+		StateMachine stateMachine = new StateMachine();
+		AnimationState state = new AnimationState(spritesheet.file_path);
+		state.title = "idle";
+		state.addFrame(spritesheet.getSprite(0).copy(), Const.DEFAULT_FRAME_TIME);
+		state.setLoop(false);
+		stateMachine.addState(state);
+		stateMachine.setDefaultState(state.title);
+		newSun.addComponent(stateMachine);
+		return newSun;
+	}
 }

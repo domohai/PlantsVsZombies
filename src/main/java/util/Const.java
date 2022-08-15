@@ -34,13 +34,16 @@ public class Const {
 	public static final int BUTTON_WIDTH = 50;
 	public static final int BUTTON_HEIGHT = 70;
 	
-	public static final int CONTAINER_OFFSET_Y = 115;
+	public static final int CONTAINER_OFFSET_Y = 112;
 	public static final int TOOLBAR_TOP = 30;
+	
+	public static final int SUN_ZINDEX = 4;
+	public static final int SUN_WIDTH = 50;
+	public static final int SUN_HEIGHT = 50;
 	
 	public static final int ZOMBIE_ZINDEX = 2;
 	public static final int PLANT_ZINDEX = 0;
 	public static final int BULLET_ZINDEX = 3;
-	public static final int SUN_ZINDEX = 4;
 	public static final int MOUSE_ZINDEX = 5;
 	public static final int CONTAINER_ZINDEX = 1;
 	
@@ -49,5 +52,6 @@ public class Const {
 	public static final int MAX_ZINDEX = 5;
 	
 	public static final float DEFAULT_FRAME_TIME = 0.16f;
+	public static final int GRAVITY = 30;
 	
 }

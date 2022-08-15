@@ -21,12 +21,15 @@ import java.util.List;
 
 public class PlayScene extends Scene {
 	public GameObject test = null;
-	public MouseControl mouseControl = null;
-	public GameObject mainContainer = null;
+	public MouseControl mouseControl;
+	public GameObject mainContainer = null, Bank;
 	private GameObject nearestPlant = null, nearestZombie = null, nearestBullet = null;
+	private SpawnMachine spawnMachine;
 	
 	public PlayScene(String name) {
 		super(name);
+		this.spawnMachine = new SpawnMachine();
+		this.mouseControl = new MouseControl();
 		this.objectsToRemove = new ArrayList<>();
 		this.plants = new HashMap<>();
 		this.zombies = new HashMap<>();
@@ -40,7 +43,7 @@ public class PlayScene extends Scene {
 	
 	@Override
 	public void start() {
-		for (Integer i = 1; i < 6; i++) {
+		for (int i = 1; i < 6; i++) {
 			for (GameObject g : this.plants.get(i)) {
 				g.start();
 			}
@@ -56,13 +59,12 @@ public class PlayScene extends Scene {
 	
 	@Override
 	public void init() {
-		this.mouseControl = new MouseControl();
 		this.mainContainer = new GameObject("Container", Const.CONTAINER_ZINDEX);
 		this.mainContainer.transform = new Transform(new Vector2D(50.0f, 0.0f), new Vector2D());
 		this.mainContainer.addComponent(new MainContainer());
 		this.mainContainer.start();
 		this.renderer.submit(this.mainContainer);
-		
+		this.spawnMachine.spawnSun();
 		// add ground
 		GameObject ground = new GameObject("Background", new Transform(new Vector2D(-200.0f, 0.0f), new Vector2D()),
 				Const.GROUND_ZINDEX, Type.OTHER, 0);
@@ -71,6 +73,10 @@ public class PlayScene extends Scene {
 		this.renderer.submit(ground);
 		
 		if (this.dataLoaded) return;
+		
+		this.Bank = new GameObject("SunBank", Const.CONTAINER_ZINDEX);
+		this.Bank.addComponent(new SunBank());
+		this.addGameObject(this.Bank);
 		
 		test = Prefabs.generateZombie(AssetPool.getSpritesheet("assets/zombies/zombie_move.png"),
 				AssetPool.getSpritesheet("assets/zombies/zomattack.png"));
@@ -98,7 +104,8 @@ public class PlayScene extends Scene {
 		new Spritesheet("assets/bullet/ProjectileSnowPea.png", 28, 28, 1, 1);
 		new Spritesheet("assets/bullet/pea_splats.png", 24, 24, 4, 4);
 		new Spritesheet("assets/bullet/SnowPea_splats.png", 24, 24, 4, 4);
-		
+		// sun
+		new Spritesheet("assets/sun/sun_small.png", 50, 50, 1, 1);
 		
 	}
 	
@@ -114,11 +121,12 @@ public class PlayScene extends Scene {
 			if (this.plants.get(i).size() > 0) {
 				this.nearestPlant = this.plants.get(i).get(0);
 				for (GameObject updatingPlant : this.plants.get(i)) {
-					if (updatingPlant.getComponent(Shoot.class) != null) {
+					Shoot shoot = updatingPlant.getComponent(Shoot.class);
+					if (shoot != null) {
 						if (this.zombies.get(i).size() > 0) {
-							updatingPlant.getComponent(Shoot.class).isShooting = true;
+							shoot.isShooting = true;
 						} else {
-							updatingPlant.getComponent(Shoot.class).isShooting = false;
+							shoot.isShooting = false;
 						}
 					}
 					updatingPlant.update(dt);
@@ -140,12 +148,10 @@ public class PlayScene extends Scene {
 						if (Bounds.checkCollision(this.nearestPlant.getComponent(Bounds.class), updatingZombie.getComponent(Bounds.class))) {
 							Bounds.resolvePlantCollision(this.nearestPlant, updatingZombie);
 						} else {
-							updatingZombie.getComponent(StateMachine.class).trigger("walk");
-							updatingZombie.getComponent(Movement.class).setVelocity(Const.ZOMBIE_SPEED, 0.0f);
+							updatingZombie.getComponent(Zombie.class).isAttacking = false;
 						}
 					} else {
-						updatingZombie.getComponent(StateMachine.class).trigger("walk");
-						updatingZombie.getComponent(Movement.class).setVelocity(Const.ZOMBIE_SPEED, 0.0f);
+						updatingZombie.getComponent(Zombie.class).isAttacking = false;
 					}
 					if (updatingZombie.transform.position.x < this.nearestZombie.transform.position.x) {
 						this.nearestZombie = updatingZombie;

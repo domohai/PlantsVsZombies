@@ -41,20 +41,6 @@ public class MouseControl extends Component {
 			if (MouseListener.getX() > Const.YARD_X && MouseListener.getX() <= (Const.YARD_X + Const.YARD_WIDTH)
 				&& MouseListener.getY() > Const.YARD_Y && MouseListener.getY() <= (Const.YARD_Y + Const.YARD_HEIGHT)) {
 				this.x = (float)Math.floor((MouseListener.getX() + MouseListener.getDx()) / Const.GRID_W);
-				/*
-				//this.y = (float) Math.floor((MouseListener.getY() + MouseListener.getDy()) / Const.GRID_H);
-				if (MouseListener.getY() >= 30 && MouseListener.getY() < Const.LINE_1) {
-					this.y = Const.LINE_1 - this.sprite.height;
-				} else if (MouseListener.getY() >= Const.LINE_1 && MouseListener.getY() < Const.LINE_2) {
-					this.y = Const.LINE_2 - this.sprite.height;
-				} else if (MouseListener.getY() >= Const.LINE_2 && MouseListener.getY() < Const.LINE_3) {
-					this.y = Const.LINE_3 - this.sprite.height;
-				} else if (MouseListener.getY() >= Const.LINE_3 && MouseListener.getY() < Const.LINE_4) {
-					this.y = Const.LINE_4 - this.sprite.height;
-				} else {
-					this.y = Const.LINE_5 - this.sprite.height;
-				}
-				*/
 				if (MouseListener.getY() >= Const.LINE_4 && MouseListener.getY() < Const.SCREEN_HEIGHT) {
 					this.y = Const.LINE_5 - this.sprite.height;
 				} else if (MouseListener.getY() >= Const.LINE_3) {
@@ -75,7 +61,7 @@ public class MouseControl extends Component {
 			this.holdingObject.transform.position.x = x;
 			this.holdingObject.transform.position.y = y;
 			if (MouseListener.mouseButtonDown(MouseEvent.BUTTON1)) {
-				if (MouseListener.getY() >= Const.CONTAINER_OFFSET_Y) {
+				if (MouseListener.getY() > Const.CONTAINER_OFFSET_Y) {
 					this.place();
 				}
 			}
