@@ -5,16 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0e6d5ce-4426-4fec-acf9-cda95d658b86" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/UI/PlantType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/components/Shoot.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/UI/MainContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UI/MainContainer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/UI/MenuItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UI/MenuItem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/abc/Prefabs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/abc/Prefabs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/abc/Type.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/abc/Type.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/abc/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/abc/Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/components/AnimationState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/components/AnimationState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/components/Bounds.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/components/Bounds.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/components/Movement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/components/Movement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/components/Bullet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/components/Bullet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/components/Ground.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/components/Ground.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/components/MouseControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/components/MouseControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/components/Rigidbody.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/components/Rigidbody.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/components/Shoot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/components/Shoot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/components/Sprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/components/Sprite.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/scenes/PlayScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/scenes/PlayScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/scenes/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/scenes/Scene.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/util/Const.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/Const.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -33,8 +39,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>

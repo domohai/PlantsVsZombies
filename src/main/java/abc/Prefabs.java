@@ -98,9 +98,10 @@ public class Prefabs {
 			exploding.addFrame(sprite.copy(), Const.DEFAULT_FRAME_TIME);
 		}
 		flying.setLoop(false);
-		exploding.setLoop(true);
+		exploding.setLoop(false);
 		stateMachine.addState(flying);
 		stateMachine.addState(exploding);
+		stateMachine.addStateTrigger(flying.title, exploding.title, "explode");
 		stateMachine.setDefaultState(flying.title);
 		newBullet.addComponent(stateMachine);
 		return newBullet;

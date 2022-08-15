@@ -96,12 +96,9 @@ public class Window extends JFrame implements Runnable {
 				time = Time.getTime();
 				delta_time = time - lastFrameTime;
 				lastFrameTime = time;
-				
 				update(delta_time);
-				
-				Thread.sleep(15);
+				Thread.sleep(20);
 			}
-			//currentScene.save();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Something wrong with Thread.sleep!");

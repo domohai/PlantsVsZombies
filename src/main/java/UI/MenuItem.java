@@ -18,18 +18,21 @@ public class MenuItem extends Component {
 	public Sprite lightSprite, darkSprite;
 	public Spritesheet itemSpritesheet1 = null;
 	public Spritesheet itemSpritesheet2 = null;
-	private int x, y , width, height;
-	public boolean isSelected;
+	private int x, y , width, height, actualY, combineW, combineH;
 	public PlantType type;
+	public float debounceTime = 10.0f;
+	public float debounceTimeLeft = 0.0f;
 	
 	public MenuItem(int x, int y, int width, int height, Sprite lightSprite, Sprite darkSprite, PlantType type) {
 		this.x = x;
 		this.y = y;
+		this.actualY = y + 30;
+		this.combineH = y + 30 + height;
+		this.combineW = x + width;
 		this.width = width;
 		this.height = height;
 		this.lightSprite = lightSprite;
 		this.darkSprite = darkSprite;
-		this.isSelected = false;
 		this.type = type;
 	}
 	
@@ -41,9 +44,10 @@ public class MenuItem extends Component {
 	@Override
 	public void update(double dt) {
 		// check if the mouse is within this item
-		if (!this.isSelected) {
-			if (MouseListener.getX() > this.x && MouseListener.getX() <= (this.x + this.width)
-					&& MouseListener.getY() > this.y + 30 && MouseListener.getY() <= (this.y + this.height + 30)) {
+		this.debounceTimeLeft -= dt;
+		if (this.debounceTimeLeft <= 0.0f) {
+			if (MouseListener.getX() > this.x && MouseListener.getX() <= (this.combineW)
+					&& MouseListener.getY() > this.actualY && MouseListener.getY() <= (this.combineH)) {
 				// check if player click left button
 				if (MouseListener.mouseButtonDown(MouseEvent.BUTTON1)) {
 					GameObject newObject = null;
@@ -67,7 +71,7 @@ public class MenuItem extends Component {
 					}
 					PlayScene scene = (PlayScene) Window.getScene();
 					scene.mouseControl.pickUpObject(newObject);
-					this.isSelected = true;
+					this.debounceTimeLeft = this.debounceTime;
 				}
 			}
 		}
@@ -75,7 +79,11 @@ public class MenuItem extends Component {
 	
 	@Override
 	public void draw(Graphics2D g2D) {
-		g2D.drawImage(this.lightSprite.image, this.x, this.y, this.width, this.height, null);
+		if (this.debounceTimeLeft <= 0.0f) {
+			g2D.drawImage(this.lightSprite.image, this.x, this.y, this.width, this.height, null);
+		} else {
+		
+		}
 	}
 	
 	@Override

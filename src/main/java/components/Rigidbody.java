@@ -3,6 +3,8 @@ package components;
 public class Rigidbody extends Component {
 	public int HP, damage;
 	public boolean hit;
+	public float debounceTime = 0.01f;
+	public float debounceTimeLeft = 0.0f;
 	
 	public Rigidbody() {
 		this.HP = 0;
@@ -23,9 +25,15 @@ public class Rigidbody extends Component {
 	@Override
 	public void update(double dt) {
 		if (this.hit) {
-			this.HP -= damage * dt;
-			if (this.HP <= 0) {
-				this.gameObject.isDead = true;
+			this.debounceTimeLeft -= dt;
+			if (this.debounceTimeLeft <= 0.0f) {
+				this.HP -= damage * dt;
+				if (this.HP <= 0) {
+					this.gameObject.isDead = true;
+				} else {
+					this.hit = false;
+					this.debounceTimeLeft = this.debounceTime;
+				}
 			}
 		}
 	}

@@ -1,5 +1,5 @@
 package abc;
 
 public enum Type {
-	ZOMBIE, PLANT, OTHER
+	ZOMBIE, PLANT, BULLET, OTHER
 }

@@ -29,7 +29,7 @@ public class AnimationState {
 		if (this.currentSprite < this.frames.size()) {
 			this.timeTracker -= dt;
 			if (timeTracker <= 0.0f) {
-				if (this.currentSprite != this.frames.size() - 1 || this.doesLoop) {
+				if ((this.currentSprite != this.frames.size() - 1) || this.doesLoop) {
 					currentSprite = (currentSprite + 1) % this.frames.size();
 				}
 				timeTracker = this.frames.get(this.currentSprite).frameTime;

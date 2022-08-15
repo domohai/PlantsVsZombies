@@ -1,7 +1,8 @@
 package components;
+
 import util.AssetPool;
+
 import javax.imageio.ImageIO;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -53,10 +54,10 @@ public class Sprite extends Component {
 		}
 		return null;
 	}
-	
+	/*
 	@Override
 	public void draw(Graphics2D g2D) {
-		g2D.drawImage(this.image, (int)this.gameObject.transform.position.x, (int)this.gameObject.transform.position.y, this.width, this.height, null);
+		//g2D.drawImage(this.image, (int)this.gameObject.transform.position.x, (int)this.gameObject.transform.position.y, this.width, this.height, null);
 	}
-
+	*/
 }

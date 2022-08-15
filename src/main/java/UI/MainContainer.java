@@ -84,7 +84,7 @@ public class MainContainer extends Component {
 	@Override
 	public void draw(Graphics2D g2D) {
 		g2D.drawImage(containerSprite.image, (int) this.gameObject.transform.position.x, (int) this.gameObject.transform.position.y,
-				this.containerSprite.width, this.containerSprite.height, null);
+				this.containerSprite.width, this.containerSprite.height - 5, null);
 		for (GameObject g : this.menuItems) {
 			g.draw(g2D);
 		}

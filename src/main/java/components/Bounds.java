@@ -8,6 +8,8 @@ public class Bounds extends Component {
 	public float width, height;
 	public float halfW, halfH;
 	public Vector2D center;
+	public static float dx = 0.0f;
+	public static float combineHalfW = 0.0f;
 	
 	public Bounds() {
 		this.width = 0;
@@ -46,16 +48,16 @@ public class Bounds extends Component {
 		if (b1 != null && b2 != null) {
 			b1.calculateCenter();
 			b2.calculateCenter();
-			float dx = b2.center.x - b1.center.x;
-			float combineHalfW = b1.halfW + b2.halfW - 20;
-			if (Math.abs(dx) <= combineHalfW) {
+			Bounds.dx = b2.center.x - b1.center.x;
+			Bounds.combineHalfW = b1.halfW + b2.halfW - 15;
+			if (Math.abs(dx) < combineHalfW) {
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	public static void resolveCollision(GameObject plant, GameObject zombie) {
+	public static void resolvePlantCollision(GameObject plant, GameObject zombie) {
 		zombie.getComponent(StateMachine.class).trigger("attack");
 		zombie.getComponent(Movement.class).setVelocity(0.0f, 0.0f);
 		plant.getComponent(Rigidbody.class).hit = true;
@@ -63,11 +65,18 @@ public class Bounds extends Component {
 		
 	}
 	
+	public static void resolveBulletCollision(GameObject bullet, GameObject zombie) {
+		zombie.getComponent(Rigidbody.class).hit = true;
+		zombie.getComponent(Rigidbody.class).setDamage(Const.PLANT_DAMAGE);
+		bullet.getComponent(Bullet.class).hitZombie = true;
+		System.out.println(zombie.getComponent(Rigidbody.class).HP);
+	}
+	/*
 	@Override
 	public void update(double dt) {
 	
 	}
-	
+	*/
 	@Override
 	public Component copy() {
 		Bounds copy = new Bounds();
