@@ -65,7 +65,7 @@ public class PlayScene extends Scene {
 		
 		TimerMachine.sunTimer.scheduleAtFixedRate(TimerMachine.sunTimerTask, 2000, 8000);
 		TimerMachine.zombieTimerPeriodOne.scheduleAtFixedRate(TimerMachine.zombieTimerTask, 30000, 15000);
-		TimerMachine.zombieTimerPeriodTwo.scheduleAtFixedRate(TimerMachine.zombieTimerTask, 60000, 15000);
+		TimerMachine.zombieTimerPeriodTwo.scheduleAtFixedRate(TimerMachine.zombieTimerTaskTwo, 60000, 15000);
 		
 		// add ground
 		GameObject ground = new GameObject("Background", new Transform(new Vector2D(-200.0f, 0.0f), new Vector2D()),

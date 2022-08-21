@@ -21,5 +21,10 @@ public class TimerMachine {
 			SpawnMachine.spawnZombie();
 		}
 	};
-
+	public static TimerTask zombieTimerTaskTwo = new TimerTask() {
+		@Override
+		public void run() {
+			SpawnMachine.spawnZombie();
+		}
+	};
 }
